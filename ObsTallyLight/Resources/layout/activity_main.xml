@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout android:fitsSystemWindows="true" android:id="@+id/rootview" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="#222"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+         
+			android:layout_width="match_parent"
+			android:text="PAUSED"
+            app:autoSizeTextType="uniform"
+			android:textColor="@android:color/white"
+            android:alpha="0.1"
+			android:layout_height="match_parent"
+			android:textStyle="bold"
+			android:textAlignment="gravity"
+            android:gravity="center"/>
+		<TextView
+            android:id="@+id/rec"
+			android:layout_width="match_parent"
+			android:background="@android:color/holo_red_dark"
+			android:text="RECORDING"
+            app:autoSizeTextType="uniform"
+			android:textColor="@android:color/white"
+			android:layout_height="match_parent"
+			android:textStyle="bold"
+            android:visibility="gone"
+			android:textAlignment="gravity"
+            android:gravity="center"/>
+    <TextView
+            android:id="@+id/live"
+			android:layout_width="match_parent"
+			android:background="@android:color/holo_red_dark"
+			android:text="LIVE"
+            app:autoSizeTextType="uniform"
+			android:textColor="@android:color/white"
+			android:layout_height="match_parent"
+			android:textStyle="bold"
+            android:visibility="gone"
+			android:textAlignment="gravity"
+            android:gravity="center"/>
+    <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="56dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+            <!--<View
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_height="1sp"/>-->
+            
+             <ImageButton
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                
+                android:id="@+id/settings"
+                android:src="@drawable/cog"
+                android:background="@android:color/transparent"
+                android:tint="#666"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+            <ProgressBar
+               android:id="@+id/connectingprogres"
+                    android:indeterminate="true"
+                android:indeterminateTint="#333"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerHorizontal="true" />
+            <ImageView
+                android:minWidth="48dp"
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:id="@+id/connected"
+                android:src="@drawable/power_plug_off"
+                android:tint="#333"
+               
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            </FrameLayout>
+           </LinearLayout>
+    <LinearLayout
+            android:id="@+id/settingspage"
+            android:layout_marginTop="32dp"
+            android:visibility="gone"
+            
+            android:background="#222"
+            android:padding="8dp"
+        android:layout_width="match_parent"
+            android:orientation="vertical"
+        android:layout_height="match_parent">
+            <TextView
+                android:text="Settings"
+                android:padding="4dp"
+                android:textSize="@dimen/abc_text_size_headline_material"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <android.support.design.widget.TextInputLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+
+     <android.support.design.widget.TextInputEditText
+            android:text="10.0.2.2"
+                    android:id="@+id/server"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:hint="Server Address"/>
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
+
+     <android.support.design.widget.TextInputEditText
+             android:layout_width="match_parent"
+                    android:id="@+id/port"
+             android:layout_height="wrap_content"
+                        android:text="4444"
+             android:hint="Server Port"/>
+
+ </android.support.design.widget.TextInputLayout>
+             <TextView
+                android:text="Tally Source"
+                android:padding="4dp"
+                android:textSize="@dimen/abc_text_size_headline_material"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ListView
+                android:choiceMode="singleChoice"
+                android:id="@+id/sources"
+                android:layout_width="match_parent"
+                android:minHeight="200dp"
+                android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/save"
+                android:text="Update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
