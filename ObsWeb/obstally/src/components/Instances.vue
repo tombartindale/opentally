@@ -12,7 +12,7 @@
 <script>
 
 import { db } from '../db'
-import Instance from '../components/Instance'
+// import Instance from '../components/Instance'
 
 export default {
     name: 'Instances',
@@ -27,13 +27,14 @@ export default {
   },
   methods: {
     push(id) {
-        this.$emit('push', {
-        ...Instance, // Or 'extends: newPage'
-        onsNavigatorProps: {
-            id: id,
-        }
-        });
+        // this.$emit('push', {
+        // ...Instance, // Or 'extends: newPage'
+        // onsNavigatorProps: {
+            // id: id,
+        // }
+        // });
     //   this.$emit('push', Instance,{id});
+        this.$router.push({path:'/instance/'+id});
     }
   }
 }

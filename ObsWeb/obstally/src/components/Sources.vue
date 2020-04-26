@@ -1,9 +1,12 @@
 <template lang="pug">
  v-ons-page
     v-ons-toolbar
-      .center Select Source
+        ons-back-button Done
+        .center Select Source
 
     v-one-list
+        ons-list-item(@click="select('')" tappable)
+            span Program Out
         ons-list-item(v-for="(source,index) in sources" v-bind:key="index" tappable modifier="chevron" @click="select(source)")
             span {{source}} 
 </template>
@@ -26,16 +29,16 @@ export default {
     id: {
       // call it upon creation too
       immediate: true,
-      handler(id) {
-        this.$rtdbBind('sources', instances.child(id).child('Sources'))
+      handler() {
+        this.$rtdbBind('sources', instances.child(this.$route.params.id).child('Sources'))
       },
     },
   },
   methods: {
     select(source) {
       console.log(source);
-      this.$root.$data.appSettings.selectedTally = source;
-      this.$emit('pop');
+    //   this.$root.$data.appSettings.selectedTally = source;
+      this.$router.push({path:'/instance/'+this.$route.params.id+'/'+source})
     }
   }
 }

@@ -2,20 +2,20 @@
 v-ons-page
     v-ons-toolbar
       ons-back-button Back
-      .center OBS Remote Tally
+      .center {{instance.Name}}
       .right
-        ons-toolbar-button(@click="settings(id)")
+        ons-toolbar-button(@click="settings($route.params.id)")
+          //- router-link(:to="'/instance/'+this.$route.params.id+'/sources'")
           ons-icon(icon="fa-cog")
     .app
-        span {{instance}}
         .status
             span(v-show="instance.Online") ONLINE
-        Tally(:instance="instance")
+        Tally(:instance="instance",:source="this.$route.params.source")
 </template>
 
 <script>
 import { db } from '../db'
-import Sources from './Sources'
+// import Sources from './Sources'
 
 const instances = db.ref('instances');
 
@@ -30,20 +30,14 @@ export default {
     id: {
       // call it upon creation too
       immediate: true,
-      handler(id) {
-        this.$rtdbBind('instance', instances.child(id))
+      handler() {
+        this.$rtdbBind('instance', instances.child(this.$route.params.id))
       },
     },
   },
   methods:{
     settings(id){
-      console.log(id);
-       this.$emit('push', {
-        ...Sources, // Or 'extends: newPage'
-        onsNavigatorProps: {
-            id: id,
-        }
-        });
+        this.$router.push({path:'/instance/'+id+'/sources'});
     }
   }
 };
@@ -58,5 +52,6 @@ export default {
 
 .app {
   position: relative;
+  // height 100%;
 }
 </style>

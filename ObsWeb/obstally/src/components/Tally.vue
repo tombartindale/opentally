@@ -1,27 +1,26 @@
 <template lang="pug">
 .tally(:class="{ live: liveMe, preview: previewMe }") {{instance.Tally}}
     div(:class="{recording: liveOut}")
-    span {{this.$root.$data}}
 </template>
 
 <script>
 export default {
     name: 'Tally',
-    props:['instance'],
+    props:['instance','source'],
     computed:{
         liveOut(){
             return this.instance.Streaming || this.instance.Recording;
         },
         liveMe(){
             if (this.instance && this.instance.Tally)
-                return this.instance.Tally.includes(this.$root.$data.selectedTally) && (this.instance.Streaming || this.instance.Recording)
+                return this.instance.Tally.includes(this.$props.source) && (this.instance.Streaming || this.instance.Recording)
             else
                 return false;
         },
 
         previewMe(){
             if (this.instance && this.instance.PreviewTally)
-                return this.instance.PreviewTally.includes(this.$root.$data.selectedTally)
+                return this.instance.PreviewTally.includes(this.$props.source)
             else
                 return false;
         }
@@ -32,10 +31,18 @@ export default {
 <style lang="stylus" scoped>
 .tally {
     border: 10px transparent solid
+    height: 100%;
 }
 
 .live {
-    border: 5px red solid;
+    border: 10px red solid;
+    background red
+}
+
+.preview
+{
+    border: 10px red solid;
+    animation: flash .7s infinite reverse ease;
 }
 
 .recording {
@@ -50,7 +57,14 @@ export default {
 	animation: pulse 2s infinite;
 }
 
-
+@keyframes flash {
+  0% {
+    border-color: transparent;
+  }
+  100% {
+    border-color: #FF4136;
+  }
+}
 
 @keyframes pulse {
 	0% {
