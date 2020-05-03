@@ -1,6 +1,11 @@
 <template lang="pug">
-.tally(:class="{ live: liveMe, preview: previewMe }") {{instance.Tally}}
+.tally(:class="{ live: liveMe, preview: previewMe }")
+    .message
+        span(v-show="previewMe && !liveMe") STANDBY
+        span(v-show="liveMe") LIVE
     div(:class="{recording: liveOut}")
+    .label
+        .text {{tally}}
 </template>
 
 <script>
@@ -11,11 +16,19 @@ export default {
         liveOut(){
             return this.instance.Streaming || this.instance.Recording;
         },
+        
         liveMe(){
             if (this.instance && this.instance.Tally)
-                return this.instance.Tally.includes(this.$props.source) && (this.instance.Streaming || this.instance.Recording)
+                if (this.instance.Tally.includes(this.$props.source) || typeof(this.$props.source)=='undefined')
+                    return (this.instance.Streaming || this.instance.Recording);
+                else
+                    return false;
+                // return this.instance.Tally.includes(this.$props.source) && (this.instance.Streaming || this.instance.Recording)
             else
-                return false;
+                if (typeof(this.$props.source)=='undefined')
+                    return (this.instance.Streaming || this.instance.Recording);
+                else
+                    return false;
         },
 
         previewMe(){
@@ -23,15 +36,50 @@ export default {
                 return this.instance.PreviewTally.includes(this.$props.source)
             else
                 return false;
+        },
+
+        tally(){
+            return (typeof(this.$props.source)!='undefined') ? this.$props.source : 'Program Out';
         }
     }
 }
 </script>
 
 <style lang="stylus" scoped>
+
 .tally {
     border: 10px transparent solid
-    height: 100%;
+    height: 99%;
+    background: #333;
+}
+
+.message {
+    color:silver;
+    width:100%;
+    top:37%;
+    text-align:center;
+    position fixed;
+    font-size: 700%;
+    opacity 30%
+}
+
+.label {
+    
+    color: white
+    font-size 180%
+    text-align center
+    position fixed
+    bottom .5em
+    left .5em
+    right .5em
+    padding .1em
+
+    .text{
+        display inline-block
+        border-radius: 2em;
+        background-color: rgba(0,0,0,.4)
+        padding 15px
+    }
 }
 
 .live {

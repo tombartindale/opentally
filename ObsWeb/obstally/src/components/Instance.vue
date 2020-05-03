@@ -1,15 +1,15 @@
 <template lang="pug">
 v-ons-page
-    v-ons-toolbar
+    v-ons-toolbar.toolbar
       ons-back-button Back
       .center {{instance.Name}}
       .right
         ons-toolbar-button(@click="settings($route.params.id)")
-          //- router-link(:to="'/instance/'+this.$route.params.id+'/sources'")
           ons-icon(icon="fa-cog")
     .app
         .status
-            span(v-show="instance.Online") ONLINE
+            span
+              ons-icon(icon="fa-plug" :class="{'offline':!instance.Online}" class="icon")
         Tally(:instance="instance",:source="this.$route.params.source")
 </template>
 
@@ -44,14 +44,36 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+
+.toolbar {
+  position fixed
+  top 0
+  left 0
+  right 0
+}
+
 .status {
   position: fixed;
-  right: 10px;
-  bottom: 10px;
+  right: 15px;
+  top: 70px;
 }
 
 .app {
-  position: relative;
-  // height 100%;
+  position: absolute;
+  left 0
+  right 0
+  top 0
+  bottom: 1em
+  z-index 10000
+}
+
+.icon{
+  font-size 2em
+  opacity 0.7
+}
+
+.offline
+{
+  opacity 0.3
 }
 </style>

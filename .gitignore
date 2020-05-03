@@ -403,3 +403,6 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
+ObsWeb/obstally/src/firebaseConfig.js
+**/client_id.json
+**/App.config

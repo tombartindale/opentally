@@ -5,14 +5,13 @@
 
     v-one-list
         ons-list-item(v-for="(instance,id) in instances" v-bind:key="id" tappable modifier="chevron" @click="push(id)")
-            span {{instance.Name}} 
-                span(v-show="instance.Pwd") LOCKED
+            //- ons-icon(icon="fa-lock" v-show="instance.Pwd" class="icon") 
+            span {{instance.Name}}
 </template>
 
 <script>
 
 import { db } from '../db'
-// import Instance from '../components/Instance'
 
 export default {
     name: 'Instances',
@@ -27,13 +26,6 @@ export default {
   },
   methods: {
     push(id) {
-        // this.$emit('push', {
-        // ...Instance, // Or 'extends: newPage'
-        // onsNavigatorProps: {
-            // id: id,
-        // }
-        // });
-    //   this.$emit('push', Instance,{id});
         this.$router.push({path:'/instance/'+id});
     }
   }

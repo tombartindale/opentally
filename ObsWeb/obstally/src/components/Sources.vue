@@ -36,8 +36,6 @@ export default {
   },
   methods: {
     select(source) {
-      console.log(source);
-    //   this.$root.$data.appSettings.selectedTally = source;
       this.$router.push({path:'/instance/'+this.$route.params.id+'/'+source})
     }
   }
