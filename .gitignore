@@ -406,3 +406,5 @@ ASALocalRun/
 ObsWeb/obstally/src/firebaseConfig.js
 **/client_id.json
 **/App.config
+
+dist

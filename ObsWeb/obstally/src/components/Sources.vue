@@ -5,7 +5,7 @@
         .center Select Source
 
     v-one-list
-        ons-list-item(@click="select('')" tappable)
+        ons-list-item(@click="select('')" tappable modifier="chevron")
             span Program Out
         ons-list-item(v-for="(source,index) in sources" v-bind:key="index" tappable modifier="chevron" @click="select(source)")
             span {{source}} 
