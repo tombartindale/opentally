@@ -94,7 +94,8 @@ namespace ObsBridge
                            _obs.PreviewSceneChanged += _obs_PreviewSceneChanged;
                            _obs.SceneChanged += _obs_SceneChanged;
                            _obs.TransitionBegin += _obs_TransitionBegin;
-                           MainInstance.Pwd = EncryptPwd(o.ClientPassword);
+                           if (!string.IsNullOrEmpty(o.ClientPassword))
+                            MainInstance.Pwd = EncryptPwd(o.ClientPassword);
                            Logger.Info($"Starting with {o.ObsPassword}@{o.Host}:{o.Port}");
                            _obs.Connect($"ws://{o.Host}:{o.Port}", o.ObsPassword);
                        });
