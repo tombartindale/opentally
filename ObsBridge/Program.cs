@@ -76,37 +76,111 @@ namespace ObsBridge
             private ObsWebSocket _obs;
             ObsInstance MainInstance = new ObsInstance();
             FirebaseClient FirebaseClient;
+            Options CurrentOptions;
+            System.Timers.Timer heartbeatCheck;
 
-            public async void Run(string[] args)
+
+            public void Run(string[] args)
             {
                 Logger.Info("Starting OBS Bridge");
-               
-                    Parser.Default.ParseArguments<Options>(args)
-                       .WithParsed<Options>(async o =>
-                       {
 
-                           await SetupFirebase();
-                           _obs = new ObsWebSocket();
-                           _obs.Connected += _obs_Connected;
-                           _obs.Disconnected += _obs_Disconnected;
-                           _obs.RecordingStateChanged += _obs_RecordingStateChanged;
-                           _obs.StreamingStateChanged += _obs_StreamingStateChanged;
-                           _obs.PreviewSceneChanged += _obs_PreviewSceneChanged;
-                           _obs.SceneChanged += _obs_SceneChanged;
-                           _obs.TransitionBegin += _obs_TransitionBegin;
-                           if (!string.IsNullOrEmpty(o.ClientPassword))
+                heartbeatCheck = new System.Timers.Timer(500);
+                heartbeatCheck.Elapsed += HeatbeatCheck_Elapsed;
+                heartbeatCheck.Enabled = false;
+                heartbeatCheck.Start();
+
+                Parser.Default.ParseArguments<Options>(args)
+                    .WithParsed<Options>(async o =>
+                    {
+                        CurrentOptions = o;
+                        await SetupFirebase();
+                        _obs = new ObsWebSocket();
+                        _obs.Connected += _obs_Connected;
+                        _obs.Disconnected += _obs_Disconnected;
+                        _obs.RecordingStateChanged += _obs_RecordingStateChanged;
+                        _obs.StreamingStateChanged += _obs_StreamingStateChanged;
+                        _obs.PreviewSceneChanged += _obs_PreviewSceneChanged;
+                        _obs.SceneChanged += _obs_SceneChanged;
+                        _obs.TransitionBegin += _obs_TransitionBegin;
+                        _obs.SourceCreated += _obs_SourceCreated;
+                        _obs.SourceDestroyed += _obs_SourceDestroyed;
+                        _obs.SourceRenamed += _obs_SourceRenamed;
+                        _obs.Heartbeat += _obs_Heartbeat;
+                        if (!string.IsNullOrEmpty(o.ClientPassword))
                             MainInstance.Pwd = EncryptPwd(o.ClientPassword);
-                           Logger.Info($"Starting with {o.ObsPassword}@{o.Host}:{o.Port}");
-                           _obs.Connect($"ws://{o.Host}:{o.Port}", o.ObsPassword);
-                       });
-                //}
-              
+                        Logger.Info($"Starting with {o.ObsPassword}@{o.Host}:{o.Port}");
+                        _obs.Connect($"ws://{o.Host}:{o.Port}", o.ObsPassword);
+                    });
             }
+
+            private void HeatbeatCheck_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+            {
+                if (_lastHeatbeat!= DateTime.MinValue)
+                {
+                    if (e.SignalTime > _lastHeatbeat.Add(TimeSpan.FromSeconds(2.1)))
+                    {
+                        Logger.Info("Lost Heartbeat");
+                        heartbeatCheck.Enabled = false;
+                        _obs.Disconnect();
+                    }
+                }
+            }
+
+            DateTime _lastHeatbeat = DateTime.MinValue;
+
+            private void _obs_Heartbeat(ObsWebSocket sender, Heartbeat heatbeat)
+            {
+                _lastHeatbeat = DateTime.Now;
+            }
+
+            private async void UpdateSources()
+            {
+                await Task.Delay(1000);
+                if (_obs.IsConnected)
+                {
+                    MainInstance.Sources = (from n in _obs.Api.GetSourcesList() select n.Name).ToList();
+                    UpdateInstance();
+                }
+            }
+
+            private void _obs_SourceRenamed(ObsWebSocket sender, string newName, string previousName)
+            {
+                UpdateSources();
+            }
+
+            private void _obs_SourceDestroyed(ObsWebSocket sender, string sourceName, string sourceType, string sourceKind)
+            {
+                UpdateSources();
+            }
+
+            private void _obs_SourceCreated(ObsWebSocket sender, SourceSettings settings)
+            {
+                UpdateSources();
+            }
+
+            bool attemptingreconnect = false;
 
             private void _obs_Disconnected(object sender, EventArgs e)
             {
-                MainInstance.Online = false;
-                UpdateInstance();
+                if (!attemptingreconnect)
+                {
+                    attemptingreconnect = true;
+                    Logger.Info("Lost OBS");
+                    MainInstance.Online = false;
+                    UpdateInstance();
+                    new Thread(new ThreadStart(() =>
+                    {
+                        Thread.Sleep(5000);
+                        if (attemptingreconnect)
+                        {
+                            attemptingreconnect = false;
+                            Logger.Info("Attempting Re-connect");
+                            _obs.Connect($"ws://{CurrentOptions.Host}:{CurrentOptions.Port}", CurrentOptions.ObsPassword);
+                        }
+                        
+
+                    })).Start();
+                }
             }
 
             private async Task<T> CallObsFunc<T>(Func<T> f)
@@ -255,11 +329,15 @@ namespace ObsBridge
 
             void _obs_Connected(object sender, EventArgs e)
             {
+                _lastHeatbeat = DateTime.Now;
+                attemptingreconnect = false;
                 Logger.Info("Connected");
                 var profilename = _obs.Api.GetCurrentProfile();
                 MainInstance.Name = $"[{Environment.MachineName}] {profilename}";
                 MainInstance.Online = true;
                 MainInstance.Sources = (from n in _obs.Api.GetSourcesList() select n.Name).ToList();
+                _obs.Api.SetHeartbeat(true);
+                heartbeatCheck.Enabled = true;
                 UpdateInstance();
             }
         }

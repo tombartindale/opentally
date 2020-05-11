@@ -73,17 +73,8 @@
     <Reference Include="System.Net.Security">
       <HintPath>..\packages\System.Net.Security.4.3.0\lib\net46\System.Net.Security.dll</HintPath>
     </Reference>
-    <Reference Include="SuperSocket.ClientEngine">
-      <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.10.0\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
-    </Reference>
     <Reference Include="System.Text.RegularExpressions">
       <HintPath>..\packages\System.Text.RegularExpressions.4.3.0\lib\net463\System.Text.RegularExpressions.dll</HintPath>
-    </Reference>
-    <Reference Include="WebSocket4Net">
-      <HintPath>..\packages\WebSocket4Net.0.15.2\lib\net45\WebSocket4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="OBS.WebSocket.NET">
-      <HintPath>..\packages\OBS.WebSocket.NET.4.7.2\lib\netstandard2.0\OBS.WebSocket.NET.dll</HintPath>
     </Reference>
     <Reference Include="LiteDB">
       <HintPath>..\packages\LiteDB.4.1.4\lib\net40\LiteDB.dll</HintPath>
@@ -161,12 +152,6 @@
     <Reference Include="CommandLine">
       <HintPath>..\packages\CommandLineParser.2.7.82\lib\net461\CommandLine.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="OAuth2">
-      <HintPath>..\packages\OAuth2.0.8.40\lib\OAuth2.dll</HintPath>
-    </Reference>
     <Reference Include="Google.Apis.Core">
       <HintPath>..\packages\Google.Apis.Core.1.45.0\lib\net45\Google.Apis.Core.dll</HintPath>
     </Reference>
@@ -199,6 +184,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="client_id.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OBS.WebSocket.NET\OBS.WebSocket.NET.csproj">
+      <Project>{8FDA3AB1-2834-4BB6-A42F-D8360475ADB5}</Project>
+      <Name>OBS.WebSocket.NET</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
