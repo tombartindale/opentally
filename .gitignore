@@ -408,3 +408,4 @@ ObsWeb/obstally/src/firebaseConfig.js
 **/App.config
 
 dist
+packages
