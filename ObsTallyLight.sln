@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObsTallyLight", "ObsTallyLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBS.WebSocket.NET", "OBS.WebSocket.NET\OBS.WebSocket.NET.csproj", "{8FDA3AB1-2834-4BB6-A42F-D8360475ADB5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObsBridgeCore", "ObsBridgeCore\ObsBridgeCore.csproj", "{86BACC57-317C-4095-9629-F89B0CEBDADC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,5 +27,9 @@ Global
 		{8FDA3AB1-2834-4BB6-A42F-D8360475ADB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FDA3AB1-2834-4BB6-A42F-D8360475ADB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FDA3AB1-2834-4BB6-A42F-D8360475ADB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86BACC57-317C-4095-9629-F89B0CEBDADC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86BACC57-317C-4095-9629-F89B0CEBDADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86BACC57-317C-4095-9629-F89B0CEBDADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86BACC57-317C-4095-9629-F89B0CEBDADC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

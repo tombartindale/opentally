@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OBS.WebSocket.NET\OBS.WebSocket.NET.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FirebaseAuthentication.net" Version="3.4.0" />
+    <PackageReference Include="FirebaseDatabase.net" Version="4.0.4" />
+    <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.45.0.1869" />
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="NLog" Version="4.7.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="client_id.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="client_id.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
