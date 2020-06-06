@@ -1,13 +1,11 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObsBridge", "ObsBridge\ObsBridge.csproj", "{BF3B9483-825B-4EBF-976F-856EDA312F59}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObsTallyLight", "ObsTallyLight\ObsTallyLight.csproj", "{A8589F02-5DCC-44D4-9D45-83C3D019F9C3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OBS.WebSocket.NET", "OBS.WebSocket.NET\OBS.WebSocket.NET.csproj", "{8FDA3AB1-2834-4BB6-A42F-D8360475ADB5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObsBridgeCore", "ObsBridgeCore\ObsBridgeCore.csproj", "{86BACC57-317C-4095-9629-F89B0CEBDADC}"
+EndProject
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "ObsTallyLight", "ObsTallyLight\ObsTallyLight.csproj", "{FCA01888-B0C8-4A7F-AACC-D933E4FF5757}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BF3B9483-825B-4EBF-976F-856EDA312F59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF3B9483-825B-4EBF-976F-856EDA312F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF3B9483-825B-4EBF-976F-856EDA312F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF3B9483-825B-4EBF-976F-856EDA312F59}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8589F02-5DCC-44D4-9D45-83C3D019F9C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8589F02-5DCC-44D4-9D45-83C3D019F9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8589F02-5DCC-44D4-9D45-83C3D019F9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8589F02-5DCC-44D4-9D45-83C3D019F9C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8FDA3AB1-2834-4BB6-A42F-D8360475ADB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8FDA3AB1-2834-4BB6-A42F-D8360475ADB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FDA3AB1-2834-4BB6-A42F-D8360475ADB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -31,5 +21,9 @@ Global
 		{86BACC57-317C-4095-9629-F89B0CEBDADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86BACC57-317C-4095-9629-F89B0CEBDADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86BACC57-317C-4095-9629-F89B0CEBDADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCA01888-B0C8-4A7F-AACC-D933E4FF5757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCA01888-B0C8-4A7F-AACC-D933E4FF5757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCA01888-B0C8-4A7F-AACC-D933E4FF5757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCA01888-B0C8-4A7F-AACC-D933E4FF5757}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

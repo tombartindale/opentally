@@ -75,19 +75,19 @@ namespace OBS.WebSocket.NET.Types
         /// Total time (in seconds) since recording started.
         /// </summary>
         [JsonProperty(PropertyName = "total-record-time")]
-        public int TotalRecordTime { set; get; }
+        public string TotalRecordTime { set; get; }
 
         /// <summary>
         /// Total bytes recorded since the recording started.
         /// </summary>
         [JsonProperty(PropertyName = "total-record-bytes")]
-        public int TotalTecordBytes { set; get; }
+        public string TotalTecordBytes { set; get; }
 
         /// <summary>
         /// Total frames recorded since the recording started.
         /// </summary>
         [JsonProperty(PropertyName = "total-record-frames")]
-        public int TotalRecordFrames { set; get; }
+        public string TotalRecordFrames { set; get; }
 
         /// <summary>
         /// OBS Stats
