@@ -17,7 +17,7 @@ steps:
 
 - script: |
     echo Installing $(clientid.secureFilePath)...
-    sudo cp $(clientid.secureFilePath) $(System.DefaultWorkingDirectory)\ObsBridgeCore
+    cp $(clientid.secureFilePath) $(System.DefaultWorkingDirectory)\ObsBridgeCore
 
 - task: DotNetCoreCLI@2
   inputs:
