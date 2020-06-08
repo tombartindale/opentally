@@ -102,6 +102,8 @@ namespace ObsBridge
 
                         var tt = Assembly.GetExecutingAssembly().GetTypes().First(t => t.FullName == srcT.FullName.Split("+")[0]);
 
+                        Logger.Info($"Using {tt}");
+
                         CurrentSource = (ISource)Activator.CreateInstance(tt, Logger, CurrentOptions);
                         CurrentSource.OnSourcesChanged += CurrentSource_OnSourcesChanged;
                         CurrentSource.OnOnlineChanged += CurrentSource_OnOnlineChanged;
@@ -113,7 +115,6 @@ namespace ObsBridge
                         CurrentSource.OnStreamingStopped += CurrentSource_OnStreamingStopped;
                         CurrentSource.OnTallyChange += CurrentSource_OnTallyChange;
                         MainInstance.SourceType = tt.Name;
-                        UpdateInstance();
                         CurrentSource.Connect();
                     });
             }

@@ -9,7 +9,7 @@ using NLog;
 using ObsBridge;
 using System.Threading;
 
-namespace ObsBridgeCore
+namespace ObsBridgeCore.Sources
 {
 
 
@@ -47,10 +47,9 @@ namespace ObsBridgeCore
         List<string> Tally = new List<string>();
         List<string> PreviewTally = new List<string>();
 
-        public ObsSource(Logger log,MainOptions options):base(log)
+        public ObsSource(Logger log,MainOptions options):base(log,options)
         {
-            var o = options as ObsOptions;
-            CurrentOptions = o;
+            CurrentOptions = options as ObsOptions;
         }
 
 

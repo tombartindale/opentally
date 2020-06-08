@@ -16,6 +16,8 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\OBS.WebSocket.NET\OBS.WebSocket.NET.csproj" />
+    <ProjectReference Include="..\LibAtem\LibAtem.Discovery\LibAtem.Discovery.csproj" />
+    <ProjectReference Include="..\LibAtem\LibAtem\LibAtem.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FirebaseAuthentication.net" Version="3.4.0" />
