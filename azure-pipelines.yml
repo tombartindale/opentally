@@ -23,7 +23,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r win-x64 -o $(System.DefaultWorkingDirectory)\Release'
+    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r win-x64 -o $(System.DefaultWorkingDirectory)\Release\win'
     zipAfterPublish: false
     workingDirectory: '$(System.DefaultWorkingDirectory)\ObsBridgeCore'
 
@@ -31,6 +31,6 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    arguments: -c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64 -o $(System.DefaultWorkingDirectory)\Release'
+    arguments: -c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64 -o $(System.DefaultWorkingDirectory)\Release\osx'
     zipAfterPublish: false
     workingDirectory: '$(System.DefaultWorkingDirectory)\ObsBridgeCore'
