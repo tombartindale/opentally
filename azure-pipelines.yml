@@ -18,6 +18,9 @@ steps:
 - script: |
     echo Installing $(clientid.secureFilePath)...
     cp $(clientid.secureFilePath) $(System.DefaultWorkingDirectory)\ObsBridgeCore
+    mkdir $(System.DefaultWorkingDirectory)\Release
+    mkdir $(System.DefaultWorkingDirectory)\Release\win
+    mkdir $(System.DefaultWorkingDirectory)\Release\osx
 
 - task: DotNetCoreCLI@2
   inputs:
