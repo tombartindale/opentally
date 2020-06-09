@@ -22,20 +22,19 @@ steps:
     mkdir $(System.DefaultWorkingDirectory)\Release\win
     mkdir $(System.DefaultWorkingDirectory)\Release\osx
 
-# - task: DotNetCoreCLI@2
-#   inputs:
-#     command: 'publish'
-#     publishWebProjects: false
-#     arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r win-x64 -o $(System.DefaultWorkingDirectory)\Release\win'
-#     zipAfterPublish: false
-#     workingDirectory: '$(System.DefaultWorkingDirectory)\ObsBridgeCore'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r win-x64 -o $(System.DefaultWorkingDirectory)\Release\win'
+    zipAfterPublish: false
+    workingDirectory: '$(System.DefaultWorkingDirectory)\ObsBridgeCore'
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: false
-    arguments: -c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64'
-# -o $(System.DefaultWorkingDirectory)\Release\osx'
+    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64 -o $(System.DefaultWorkingDirectory)\Release\osx'
     zipAfterPublish: false
     workingDirectory: '$(System.DefaultWorkingDirectory)\ObsBridgeCore'
 
