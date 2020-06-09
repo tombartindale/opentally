@@ -20,15 +20,12 @@ steps:
 - script: |
     echo Installing $(clientid.secureFilePath)...
     cp $(clientid.secureFilePath) $(System.DefaultWorkingDirectory)\ObsBridgeCore
-    mkdir $(System.DefaultWorkingDirectory)\Release
-    mkdir $(System.DefaultWorkingDirectory)\Release\win
-    mkdir $(System.DefaultWorkingDirectory)\Release\osx
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: false
-    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r win-x64 -o $(System.DefaultWorkingDirectory)\Release\win'
+    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r win-x64 -o $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: false
     workingDirectory: '$(System.DefaultWorkingDirectory)\ObsBridgeCore'
 
@@ -36,7 +33,7 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64 -o $(System.DefaultWorkingDirectory)\Release\osx'
+    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64 -o $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: false
     workingDirectory: '$(System.DefaultWorkingDirectory)\ObsBridgeCore'
 
