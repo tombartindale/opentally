@@ -34,3 +34,14 @@ steps:
     arguments: -c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64 -o $(System.DefaultWorkingDirectory)\Release\osx'
     zipAfterPublish: false
     workingDirectory: '$(System.DefaultWorkingDirectory)\ObsBridgeCore'
+
+- task: GitHubRelease@1
+  inputs:
+    gitHubConnection: 'github.com_tombartindale'
+    repositoryName: 'tombartindale/obstally'
+    action: 'create'
+    target: '$(Build.SourceVersion)'
+    tagSource: 'gitTag'
+    assets: 'Release/*'
+    changeLogCompareToRelease: 'lastFullRelease'
+    changeLogType: 'commitBased'
