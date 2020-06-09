@@ -34,7 +34,8 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
-    arguments: -c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64 -o $(System.DefaultWorkingDirectory)\Release\osx'
+    arguments: -c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64'
+# -o $(System.DefaultWorkingDirectory)\Release\osx'
     zipAfterPublish: false
     workingDirectory: '$(System.DefaultWorkingDirectory)\ObsBridgeCore'
 
