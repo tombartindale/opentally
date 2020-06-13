@@ -13,6 +13,14 @@
     <PlatformTarget>anycpu</PlatformTarget>
     <NoStdLib>true</NoStdLib>
     <OutputPath>bin\Debug\netcoreapp3.1</OutputPath>
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>BeforeBuild</type>
+          <command>cp ${SolutionDir}/ObsBridgeCore/Sources/StreamingStateCommand.cs ${SolutionDir}/LibAtem/LibAtem/Commands/</command>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NoStdLib>true</NoStdLib>
@@ -20,7 +28,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\OBS.WebSocket.NET\OBS.WebSocket.NET.csproj" />
-    <ProjectReference Include="..\LibAtem\LibAtem.Discovery\LibAtem.Discovery.csproj" />
     <ProjectReference Include="..\LibAtem\LibAtem\LibAtem.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -30,6 +37,7 @@
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="NLog" Version="4.7.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
+    <PackageReference Include="Zeroconf" Version="3.3.16" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="client_id.json" />
@@ -44,5 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Sources\StreamingStateCommand.cs" />
   </ItemGroup>
 </Project>

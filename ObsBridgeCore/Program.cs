@@ -161,7 +161,7 @@ namespace ObsBridge
 
             private void CurrentSource_OnNameChanged(string obj)
             {
-                MainInstance.Name = obj;
+                MainInstance.Name = $"[{Environment.MachineName}] {obj}";
                 UpdateInstance();
             }
 
@@ -212,6 +212,7 @@ namespace ObsBridge
                 }
             }
 
+            FirebaseAuthLink auth;
 
             async Task SetupFirebase()
             {
@@ -223,8 +224,7 @@ namespace ObsBridge
 
                 await credential.RefreshTokenAsync(new CancellationToken());
 
-
-                var auth = await authProvider.SignInWithGoogleIdTokenAsync(credential.Token.IdToken);
+                auth = await authProvider.SignInWithGoogleIdTokenAsync(credential.Token.IdToken);
 
                 FirebaseClient = new FirebaseClient(
                   "https://obstally.firebaseio.com/",
@@ -249,6 +249,7 @@ namespace ObsBridge
                 catch (Exception e)
                 {
                     Logger.Error(e, "Firebase Error");
+                    await SetupFirebase();
                 }
             }
 

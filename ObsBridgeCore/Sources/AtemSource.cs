@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using CommandLine;
 using LibAtem.Commands;
-using LibAtem.Discovery;
 using LibAtem.Net;
 using NLog;
 using ObsBridge;
 using System.Linq;
 using LibAtem.Commands.DeviceProfile;
+using Zeroconf;
+using System.Threading.Tasks;
+using LibAtem.Commands.Settings;
 
 namespace ObsBridgeCore.Sources
 {
@@ -20,12 +22,14 @@ namespace ObsBridgeCore.Sources
             public string Name { get; set; }
         }
 
-        AtemDiscoveryService discoveryService = new AtemDiscoveryService();
+        
+
+        //AtemDiscoveryService discoveryService = new AtemDiscoveryService(debug:true);
         AtemClient atem;
         AtemOptions CurrentOptions;
         List<string> Sources = new List<string>();
-        List<string> Tally = new List<string>();
-        List<string> Preview = new List<string>();
+        HashSet<string> Tally = new HashSet<string>();
+        HashSet<string> Preview = new HashSet<string>();
 
         public AtemSource(Logger log, MainOptions options) : base(log,options)
         {
@@ -42,31 +46,68 @@ namespace ObsBridgeCore.Sources
         public override event Action<DateTime> OnStreamingStopped;
         public override event Action<string> OnNameChanged;
 
-        public override void Connect()
+        public async override void Connect()
         {
+
             OnNameChanged?.Invoke(CurrentOptions.Name);
-            discoveryService.OnDeviceSeen += DiscoveryService_OnDeviceSeen;
-            discoveryService.GetDevices();
 
             Logger.Info("Searching for devices...");
+
+            //ILookup<string, string> domains = await ZeroconfResolver.BrowseDomainsAsync();
+
+            await Discover();
+
+            
+
+
+
+            //Console.WriteLine(results);
+
+            //var foundDevices = _DeviceLocator.SearchAsync();
+
+
+            //if (foundDevices.Count() > 0)
+            //{
+                //var fullDevice = await foundDevices.First().GetDeviceInfo();
+
+                //Console.WriteLine(fullDevice);
+            //}
+
+
+            //discoveryService.OnDeviceSeen += DiscoveryService_OnDeviceSeen;
+            //discoveryService.GetDevices();
+
         }
 
-        private void DiscoveryService_OnDeviceSeen(object sender, AtemDeviceInfo device)
+        async Task Discover()
         {
-            discoveryService.Stop();
-            Logger.Info($"Connected to {device.Name} at {device.Address}");
-            atem = new AtemClient(device.Address, true);
+            IReadOnlyList<IZeroconfHost> results = await ZeroconfResolver.ResolveAsync("_blackmagic._tcp.local.");
+            if (results.Count() > 0)
+                DiscoveryService_OnDeviceSeen(null, results[0]);
+            else
+                await Discover();
+        }
+
+
+
+        private void DiscoveryService_OnDeviceSeen(object sender, IZeroconfHost device)
+        {
+            //discoveryService.Stop();
+            //var dd = await device.DiscoveredDevice.GetDeviceInfo();
+            Logger.Info($"Connected to {device.DisplayName} at {device.IPAddress}");
+            atem = new AtemClient(device.IPAddress, true);
             atem.OnReceive += Atem_OnReceive;
             atem.OnConnection += Atem_OnConnection;
             atem.OnDisconnect += Atem_OnDisconnect;
-            
+
         }
 
-        private void Atem_OnDisconnect(object sender)
+        private async void Atem_OnDisconnect(object sender)
         {
             OnOnlineChanged?.Invoke(false);
-            discoveryService.GetDevices();
+            //discoveryService.GetDevices();
             Logger.Info("Searching for devices...");
+            await Discover();
         }
 
         private void Atem_OnConnection(object sender)
@@ -74,29 +115,92 @@ namespace ObsBridgeCore.Sources
             OnOnlineChanged?.Invoke(true);
             OnNameChanged?.Invoke("ATEM Switcher");
 
-            Sources.Add("Input 1");
-            Sources.Add("Input 2");
-            Sources.Add("Input 3");
-            Sources.Add("Input 4");
+            if (Sources.Count == 0)
+            {
 
-            OnSourcesChanged?.Invoke(Sources);
+                Sources.Add("Input 1");
+                Sources.Add("Input 2");
+                Sources.Add("Input 3");
+                Sources.Add("Input 4");
 
-            atem.SendCommand(new TopologyCommand());
+                OnSourcesChanged?.Invoke(Sources);
+                //atem.SendCommand(new TopologyCommand());
+            }
+
         }
+
+        DateTime? recordingstarted;
+        uint lastseentimecode;
 
         private void Atem_OnReceive(object sender, IReadOnlyList<LibAtem.Commands.ICommand> commands)
         {
             foreach (ICommand cmd in commands)
             {
-                if (cmd is TopologyCommand)
+                //Console.WriteLine(cmd);
+
+                if (cmd is OnAirStateCommand)
                 {
-                    var top = cmd as TopologyCommand;
-                    var count = top.VideoSources;
-                    Sources.Clear();
-                    for (int i = 0; i < Sources.Count; i++)
+                    //Console.WriteLine("on air");
+                }
+
+                if (cmd is StreamingStateCommand)
+                {
+                    //Console.WriteLine("Streaming state changed " + ((StreamingStateCommand)cmd).State);
+                    if (((StreamingStateCommand)cmd).State == StreamState.Starting)
                     {
-                        Sources.Add($"Input {i}");
+                        OnStreamingStarted?.Invoke(DateTime.Now);
                     }
+
+                    if (((StreamingStateCommand)cmd).State == StreamState.Stopped)
+                    {
+                        OnStreamingStopped?.Invoke(DateTime.Now);
+                    }
+                }
+
+                if (cmd is RecordingStateCommand)
+                {
+                    Console.WriteLine("Rec state cmd");
+                }
+
+
+                //if (cmd is OnAirStateCommand)
+                //{
+                //    Console.WriteLine(cmd);
+                //    var timecode = cmd as TimeCodeCommand;
+                //    lastseentimecode = timecode.Second;
+                //    //Console.WriteLine(((TimeCodeCommand)cmd).Frame);
+                //    if (recordingstarted == null)
+                //    {
+                //        recordingstarted = DateTime.Now;
+                //        OnStreamingStarted?.Invoke(recordingstarted??DateTime.Now);
+                //        OnRecordingStarted?.Invoke(recordingstarted??DateTime.Now);
+
+                //        //time since last TimeCodeCommand is longer than a certain amount then recording has stopped...
+                //    }
+                //}
+
+                if (cmd is InputPropertiesGetCommand)
+                {
+                    //var top = cmd as TopologyV811Command;
+                    //var count = top.VideoSources;
+
+                    if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input1)
+                        Sources[0] = ((InputPropertiesGetCommand)cmd).LongName;
+
+                    if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input2)
+                        Sources[1] = ((InputPropertiesGetCommand)cmd).LongName;
+
+                    if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input3)
+                        Sources[2] = ((InputPropertiesGetCommand)cmd).LongName;
+
+                    if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input4)
+                        Sources[3] = ((InputPropertiesGetCommand)cmd).LongName;
+
+                    //Sources.Clear();
+                    //for (int i = 0; i < ; i++)
+                    //{
+                    //    Sources.Add($"Input {i}");
+                    //}
                     OnSourcesChanged?.Invoke(Sources);
                 }
 
@@ -104,30 +208,31 @@ namespace ObsBridgeCore.Sources
                 {
                     //var tally = ((TallyBySourceCommand)cmd).Tally
 
-                    Console.WriteLine(((TallyBySourceCommand)cmd).Tally.Count);
-                    Console.WriteLine(((TallyBySourceCommand)cmd).Tally.Keys);
-                    Console.WriteLine(((TallyBySourceCommand)cmd).Tally);
+                    //Console.WriteLine(((TallyBySourceCommand)cmd).Tally.Count);
+                    //Console.WriteLine(((TallyBySourceCommand)cmd).Tally.Keys);
+                    //Console.WriteLine(((TallyBySourceCommand)cmd).Tally);
                 }
 
                 if (cmd is TallyByInputCommand)
                 {
                     //first bool is program, second is preview?
                     var tally = ((TallyByInputCommand)cmd).Tally;
-                    Console.WriteLine(((TallyByInputCommand)cmd).Tally.Count);
+                    //Console.WriteLine(((TallyByInputCommand)cmd).Tally.Count);
                     for (int i=0;i<Sources.Count;i++)
                     {
                         if (tally[i].Item1)
                             Tally.Add(Sources[i]);
                         else
                             Tally.Remove(Sources[i]);
+
                         if (tally[i].Item2)
                             Preview.Add(Sources[i]);
                         else
                             Preview.Remove(Sources[i]);
                     }
 
-                    OnTallyChange?.Invoke(Tally);
-                    OnPreviewTallyChange?.Invoke(Preview);
+                    OnTallyChange?.Invoke(Tally.ToList());
+                    OnPreviewTallyChange?.Invoke(Preview.ToList());
                 }
             }
         }
