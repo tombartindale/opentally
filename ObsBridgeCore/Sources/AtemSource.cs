@@ -6,7 +6,6 @@ using LibAtem.Net;
 using NLog;
 using ObsBridge;
 using System.Linq;
-using LibAtem.Commands.DeviceProfile;
 using Zeroconf;
 using System.Threading.Tasks;
 using LibAtem.Commands.Settings;
@@ -22,9 +21,6 @@ namespace ObsBridgeCore.Sources
             public string Name { get; set; }
         }
 
-        
-
-        //AtemDiscoveryService discoveryService = new AtemDiscoveryService(debug:true);
         AtemClient atem;
         AtemOptions CurrentOptions;
         List<string> Sources = new List<string>();
@@ -56,27 +52,6 @@ namespace ObsBridgeCore.Sources
             //ILookup<string, string> domains = await ZeroconfResolver.BrowseDomainsAsync();
 
             await Discover();
-
-            
-
-
-
-            //Console.WriteLine(results);
-
-            //var foundDevices = _DeviceLocator.SearchAsync();
-
-
-            //if (foundDevices.Count() > 0)
-            //{
-                //var fullDevice = await foundDevices.First().GetDeviceInfo();
-
-                //Console.WriteLine(fullDevice);
-            //}
-
-
-            //discoveryService.OnDeviceSeen += DiscoveryService_OnDeviceSeen;
-            //discoveryService.GetDevices();
-
         }
 
         async Task Discover()
@@ -162,23 +137,6 @@ namespace ObsBridgeCore.Sources
                     Console.WriteLine("Rec state cmd");
                 }
 
-
-                //if (cmd is OnAirStateCommand)
-                //{
-                //    Console.WriteLine(cmd);
-                //    var timecode = cmd as TimeCodeCommand;
-                //    lastseentimecode = timecode.Second;
-                //    //Console.WriteLine(((TimeCodeCommand)cmd).Frame);
-                //    if (recordingstarted == null)
-                //    {
-                //        recordingstarted = DateTime.Now;
-                //        OnStreamingStarted?.Invoke(recordingstarted??DateTime.Now);
-                //        OnRecordingStarted?.Invoke(recordingstarted??DateTime.Now);
-
-                //        //time since last TimeCodeCommand is longer than a certain amount then recording has stopped...
-                //    }
-                //}
-
                 if (cmd is InputPropertiesGetCommand)
                 {
                     //var top = cmd as TopologyV811Command;
@@ -196,28 +154,14 @@ namespace ObsBridgeCore.Sources
                     if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input4)
                         Sources[3] = ((InputPropertiesGetCommand)cmd).LongName;
 
-                    //Sources.Clear();
-                    //for (int i = 0; i < ; i++)
-                    //{
-                    //    Sources.Add($"Input {i}");
-                    //}
                     OnSourcesChanged?.Invoke(Sources);
-                }
-
-                if (cmd is TallyBySourceCommand)
-                {
-                    //var tally = ((TallyBySourceCommand)cmd).Tally
-
-                    //Console.WriteLine(((TallyBySourceCommand)cmd).Tally.Count);
-                    //Console.WriteLine(((TallyBySourceCommand)cmd).Tally.Keys);
-                    //Console.WriteLine(((TallyBySourceCommand)cmd).Tally);
                 }
 
                 if (cmd is TallyByInputCommand)
                 {
                     //first bool is program, second is preview?
                     var tally = ((TallyByInputCommand)cmd).Tally;
-                    //Console.WriteLine(((TallyByInputCommand)cmd).Tally.Count);
+                    
                     for (int i=0;i<Sources.Count;i++)
                     {
                         if (tally[i].Item1)
