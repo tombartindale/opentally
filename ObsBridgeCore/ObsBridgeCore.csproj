@@ -13,14 +13,6 @@
     <PlatformTarget>anycpu</PlatformTarget>
     <NoStdLib>true</NoStdLib>
     <OutputPath>bin\Debug\netcoreapp3.1</OutputPath>
-    <CustomCommands>
-      <CustomCommands>
-        <Command>
-          <type>BeforeBuild</type>
-          <command>cp ${SolutionDir}/ObsBridgeCore/Sources/StreamingStateCommand.cs ${SolutionDir}/LibAtem/LibAtem/Commands/</command>
-        </Command>
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <NoStdLib>true</NoStdLib>
@@ -28,16 +20,16 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\OBS.WebSocket.NET\OBS.WebSocket.NET.csproj" />
-    <ProjectReference Include="..\LibAtem\LibAtem\LibAtem.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FirebaseAuthentication.net" Version="3.4.0" />
     <PackageReference Include="FirebaseDatabase.net" Version="4.0.4" />
     <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.45.0.1869" />
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
-    <PackageReference Include="NLog" Version="4.7.0" />
+    <PackageReference Include="NLog" Version="4.7.2" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
     <PackageReference Include="Zeroconf" Version="3.3.16" />
+    <PackageReference Include="log4net" Version="2.0.8" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="client_id.json" />
@@ -52,8 +44,1463 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Sources\" />
+    <Folder Include="Atem\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="Sources\StreamingStateCommand.cs" />
+    <Compile Include="..\LibAtem\LibAtem\CommandBuilder.cs">
+      <Link>Atem\LibAtem\CommandBuilder.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Version.cs">
+      <Link>Atem\LibAtem\Version.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\ParsedCommand.cs">
+      <Link>Atem\LibAtem\ParsedCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\ReceivedPacket.cs">
+      <Link>Atem\LibAtem\Net\ReceivedPacket.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\AtemConstants.cs">
+      <Link>Atem\LibAtem\Net\AtemConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\AtemClient.cs">
+      <Link>Atem\LibAtem\Net\AtemClient.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\OutboundMessage.cs">
+      <Link>Atem\LibAtem\Net\OutboundMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\AtemConnection.cs">
+      <Link>Atem\LibAtem\Net\AtemConnection.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\AtemClientConnection.cs">
+      <Link>Atem\LibAtem\Net\AtemClientConnection.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\DataTransferManager.cs">
+      <Link>Atem\LibAtem\Net\DataTransfer\DataTransferManager.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\UploadMacroJob.cs">
+      <Link>Atem\LibAtem\Net\DataTransfer\UploadMacroJob.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\DownloadMediaStillJob.cs">
+      <Link>Atem\LibAtem\Net\DataTransfer\DownloadMediaStillJob.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\DownloadMacroJob.cs">
+      <Link>Atem\LibAtem\Net\DataTransfer\DownloadMacroJob.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\DataTransferJob.cs">
+      <Link>Atem\LibAtem\Net\DataTransfer\DataTransferJob.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\UploadJobBase.cs">
+      <Link>Atem\LibAtem\Net\DataTransfer\UploadJobBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\UploadMediaClipJob.cs">
+      <Link>Atem\LibAtem\Net\DataTransfer\UploadMediaClipJob.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\UploadMediaStillJob.cs">
+      <Link>Atem\LibAtem\Net\DataTransfer\UploadMediaStillJob.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\UploadMediaAudioJob.cs">
+      <Link>Atem\LibAtem\Net\DataTransfer\UploadMediaAudioJob.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Util\StringExtenstions.cs">
+      <Link>Atem\LibAtem\Util\StringExtenstions.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Util\EnumExtensions.cs">
+      <Link>Atem\LibAtem\Util\EnumExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Util\UniqueQueue.cs">
+      <Link>Atem\LibAtem\Util\UniqueQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Util\ListExtensions.cs">
+      <Link>Atem\LibAtem\Util\ListExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Util\Collections.cs">
+      <Link>Atem\LibAtem\Util\Collections.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Util\MathExt.cs">
+      <Link>Atem\LibAtem\Util\MathExt.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Util\IPUtil.cs">
+      <Link>Atem\LibAtem\Util\IPUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Util\Media\FrameEncodingUtil.cs">
+      <Link>Atem\LibAtem\Util\Media\FrameEncodingUtil.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Util\Media\AtemFrame.cs">
+      <Link>Atem\LibAtem\Util\Media\AtemFrame.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Util\Media\BT709ColourSpaceConverter.cs">
+      <Link>Atem\LibAtem\Util\Media\BT709ColourSpaceConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\Int64Attribute.cs">
+      <Link>Atem\LibAtem\Serialization\Int64Attribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\StringAttribute.cs">
+      <Link>Atem\LibAtem\Serialization\StringAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\UInt16Attribute.cs">
+      <Link>Atem\LibAtem\Serialization\UInt16Attribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\EnumAttribute.cs">
+      <Link>Atem\LibAtem\Serialization\EnumAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\DecibelsAttribute.cs">
+      <Link>Atem\LibAtem\Serialization\DecibelsAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\ByteArrayAttribute.cs">
+      <Link>Atem\LibAtem\Serialization\ByteArrayAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\UInt16ListAttribute.cs">
+      <Link>Atem\LibAtem\Serialization\UInt16ListAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\Int32Attribute.cs">
+      <Link>Atem\LibAtem\Serialization\Int32Attribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\AutoSerializeBase.cs">
+      <Link>Atem\LibAtem\Serialization\AutoSerializeBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\SerializableAttributes.cs">
+      <Link>Atem\LibAtem\Serialization\SerializableAttributes.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\BoolAttribute.cs">
+      <Link>Atem\LibAtem\Serialization\BoolAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\Int16Attribute.cs">
+      <Link>Atem\LibAtem\Serialization\Int16Attribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\UInt8Attribute.cs">
+      <Link>Atem\LibAtem\Serialization\UInt8Attribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\MeAvailability.cs">
+      <Link>Atem\LibAtem\Common\MeAvailability.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\MixEffectKeyType.cs">
+      <Link>Atem\LibAtem\Common\MixEffectKeyType.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\TransitionLayer.cs">
+      <Link>Atem\LibAtem\Common\TransitionLayer.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\Pattern.cs">
+      <Link>Atem\LibAtem\Common\Pattern.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\StingerSource.cs">
+      <Link>Atem\LibAtem\Common\StingerSource.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\PortType.cs">
+      <Link>Atem\LibAtem\Common\PortType.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\Id.cs">
+      <Link>Atem\LibAtem\Common\Id.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\VideoSource.cs">
+      <Link>Atem\LibAtem\Common\VideoSource.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\SDI3GOutputLevel.cs">
+      <Link>Atem\LibAtem\Common\SDI3GOutputLevel.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\SuperSourceArtOption.cs">
+      <Link>Atem\LibAtem\Common\SuperSourceArtOption.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\MacroOperationType.cs">
+      <Link>Atem\LibAtem\Common\MacroOperationType.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\TStyle.cs">
+      <Link>Atem\LibAtem\Common\TStyle.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\XmlAsStringAttribute.cs">
+      <Link>Atem\LibAtem\Common\XmlAsStringAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\VideoMode.cs">
+      <Link>Atem\LibAtem\Common\VideoMode.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\SerialMode.cs">
+      <Link>Atem\LibAtem\Common\SerialMode.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\AudioMixOption.cs">
+      <Link>Atem\LibAtem\Common\AudioMixOption.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\MixMinusMode.cs">
+      <Link>Atem\LibAtem\Common\MixMinusMode.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\MultiViewLayout.cs">
+      <Link>Atem\LibAtem\Common\MultiViewLayout.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\DownConvertMode.cs">
+      <Link>Atem\LibAtem\Common\DownConvertMode.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\DVEEffect.cs">
+      <Link>Atem\LibAtem\Common\DVEEffect.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\AudioSource.cs">
+      <Link>Atem\LibAtem\Common\AudioSource.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\SourceAvailability.cs">
+      <Link>Atem\LibAtem\Common\SourceAvailability.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\MediaPlayerSource.cs">
+      <Link>Atem\LibAtem\Common\MediaPlayerSource.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\AuxiliaryInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\AuxiliaryInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\ColorGeneratorSaturationMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\ColorGeneratorSaturationMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MacroSleepMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MacroSleepMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MacroOpBase.cs">
+      <Link>Atem\LibAtem\MacroOperations\MacroOpBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\ColorGeneratorHueMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\ColorGeneratorHueMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\ColorGeneratorLuminescenceMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\ColorGeneratorLuminescenceMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Settings\MultiViewWindowInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Settings\MultiViewWindowInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Settings\InputVideoPortMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Settings\InputVideoPortMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Settings\MultiViewLayoutMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Settings\MultiViewLayoutMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Settings\DownConvertModeMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Settings\DownConvertModeMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Settings\SetSerialPortFunctionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Settings\SetSerialPortFunctionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Settings\VideoModeMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Settings\VideoModeMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\HyperDeck\HyperDeckMacroOpBase.cs">
+      <Link>Atem\LibAtem\MacroOperations\HyperDeck\HyperDeckMacroOpBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\HyperDeck\HyperDeckSetSpeedMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\HyperDeck\HyperDeckSetSpeedMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\HyperDeck\HyperDeckPlayMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\HyperDeck\HyperDeckPlayMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\HyperDeck\HyperDeckSetSourceClipIndexMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\HyperDeck\HyperDeckSetSourceClipIndexMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\HyperDeck\HyperDeckSetSingleClipMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\HyperDeck\HyperDeckSetSingleClipMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\HyperDeck\HyperDeckStopMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\HyperDeck\HyperDeckStopMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\HyperDeck\HyperDeckSetLoopMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\HyperDeck\HyperDeckSetLoopMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerInputGainMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerInputGainMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMasterOutResetPeaksMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMasterOutResetPeaksMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMasterOutGainMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMasterOutGainMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutDimMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutDimMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutSoloInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutSoloInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutSoloMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutSoloMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerInputResetPeaksMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerInputResetPeaksMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutResetPeaksMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutResetPeaksMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutGainMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutGainMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMasterOutFollowFadeToBlackMixEffectBlock1MacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMasterOutFollowFadeToBlackMixEffectBlock1MacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerInputMixTypeMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerInputMixTypeMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMasterOutBalanceMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMasterOutBalanceMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerAfvFollowTransitionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerAfvFollowTransitionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutMuteMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerMonitorOutMuteMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Audio\AudioMixerInputBalanceMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Audio\AudioMixerInputBalanceMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMaskEnableMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMaskEnableMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMacroOpBase.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMacroOpBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxYPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxYPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderBevelMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderBevelMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxXPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxXPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderBevelSoftnessMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderBevelSoftnessMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceArtFillInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceArtFillInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceMacroOpBase.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceMacroOpBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderEnableMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderEnableMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceArtInvertMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceArtInvertMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceArtCutInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceArtCutInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderBevelPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderBevelPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceShadowDirectionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceShadowDirectionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMaskRightMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMaskRightMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderOuterWidthMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderOuterWidthMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceShadowAltitudeMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceShadowAltitudeMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMaskBottomMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMaskBottomMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderInnerWidthMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderInnerWidthMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderLuminescenceMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderLuminescenceMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxEnableMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxEnableMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceArtGainMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceArtGainMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxSizeMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxSizeMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderHueMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderHueMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMaskLeftMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMaskLeftMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceArtPreMultiplyMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceArtPreMultiplyMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceArtClipMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceArtClipMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMaskTopMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxMaskTopMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderSaturationMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderSaturationMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBoxInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderInnerSoftnessMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderInnerSoftnessMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderOuterSoftnessMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceBorderOuterSoftnessMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\SuperSource\SuperSourceArtAboveMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\SuperSource\SuperSourceArtAboveMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\FadeToBlackAutoMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\FadeToBlackAutoMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\CutTransitionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\CutTransitionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\AutoTransitionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\AutoTransitionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\PreviewInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\PreviewInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\ProgramInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\ProgramInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\MixEffectMacroOpBase.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\MixEffectMacroOpBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\FadeToBlackRateMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\FadeToBlackRateMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\TransitionStyleMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\TransitionStyleMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\TransitionMixRateMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\TransitionMixRateMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\TransitionRateMacroOpBase.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\TransitionRateMacroOpBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\TransitionPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\TransitionPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\TransitionPreviewMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\TransitionPreviewMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\TransitionSourceMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\TransitionSourceMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Dip\TransitionDipInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Dip\TransitionDipInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Dip\TransitionDipRateMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Dip\TransitionDipRateMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\DVE\TransitionDVEPatternMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\DVE\TransitionDVEPatternMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\DVE\TransitionDVERateMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\DVE\TransitionDVERateMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerTriggerPointMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerTriggerPointMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerDVEPreMultiplyMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerDVEPreMultiplyMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerRateMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerRateMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionDVECutInputEnableMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionDVECutInputEnableMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerMixRateMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerMixRateMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionDVECutInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionDVECutInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerResetDurationsMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerResetDurationsMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerSourceMediaPlayerMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerSourceMediaPlayerMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerDVEGainMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerDVEGainMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerClipDurationMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerClipDurationMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerPreRollMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerPreRollMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerDVEInvertMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerDVEInvertMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionDVEFillInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionDVEFillInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerDVEClipMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Stinger\TransitionStingerDVEClipMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeBorderSoftnessMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeBorderSoftnessMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeSymmetryMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeSymmetryMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeRateMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeRateMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeYPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeYPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeXPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeXPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeBorderWidthMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeBorderWidthMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeAndDVEReverseMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeAndDVEReverseMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeBorderFillInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeBorderFillInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeAndDVEFlipFlopMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipeAndDVEFlipFlopMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipePatternMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Transition\Wipe\TransitionWipePatternMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\KeyMaskRightMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\KeyMaskRightMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\KeyFlyEnableMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\KeyFlyEnableMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\KeyOnAirMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\KeyOnAirMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\KeyMaskBottomMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\KeyMaskBottomMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\KeyCutInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\KeyCutInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\KeyMaskLeftMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\KeyMaskLeftMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\KeyFillInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\KeyFillInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\KeyTypeMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\KeyTypeMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\KeyMaskEnableMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\KeyMaskEnableMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\MixEffectKeyMacroOpBase.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\MixEffectKeyMacroOpBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\KeyMaskTopMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\KeyMaskTopMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Chroma\ChromaKeyHueMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Chroma\ChromaKeyHueMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Chroma\ChromaKeyGainMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Chroma\ChromaKeyGainMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Chroma\ChromaKeyNarrowMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Chroma\ChromaKeyNarrowMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Chroma\ChromaKeyLiftMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Chroma\ChromaKeyLiftMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Chroma\ChromaKeyYSupressMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Chroma\ChromaKeyYSupressMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Luma\LumaKeyInvertMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Luma\LumaKeyInvertMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Luma\LumaKeyPreMultiplyMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Luma\LumaKeyPreMultiplyMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Luma\LumaKeyClipMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Luma\LumaKeyClipMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Luma\LumaKeyGainMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Luma\LumaKeyGainMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderLuminescenceMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderLuminescenceMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyShadowDirectionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyShadowDirectionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderInnerSoftnessMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderInnerSoftnessMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderOuterSoftnessMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderOuterSoftnessMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\FlyKeyRunToAllMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\FlyKeyRunToAllMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderBevelMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderBevelMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyMaskEnableMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyMaskEnableMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyYPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyYPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyYSizeMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyYSizeMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\FlyKeyRunToKeyFrameMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\FlyKeyRunToKeyFrameMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyXPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyXPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyMaskRightMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyMaskRightMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderBevelPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderBevelPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\FlyKeySetKeyFrameMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\FlyKeySetKeyFrameMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyShadowAltitudeMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyShadowAltitudeMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyRateMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyRateMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderOpacityMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderOpacityMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderSaturationMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderSaturationMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyRotationMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyRotationMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyXSizeMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEAndFlyKeyXSizeMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyMaskLeftMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyMaskLeftMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderBevelSoftnessMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderBevelSoftnessMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\FlyKeyFrameMacroOpBase.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\FlyKeyFrameMacroOpBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderInnerWidthMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderInnerWidthMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyShadowEnableMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyShadowEnableMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyMaskTopMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyMaskTopMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderOuterWidthMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderOuterWidthMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyMaskBottomMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyMaskBottomMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderEnableMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderEnableMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\FlyKeyRunToInfinityMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\FlyKeyRunToInfinityMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderHueMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\DVE\DVEKeyBorderHueMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeyXPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeyXPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeySymmetryMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeySymmetryMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeyYPositionMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeyYPositionMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeySoftnessMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeySoftnessMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeySizeMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeySizeMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeyPatternMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\MixEffects\Key\Pattern\PatternKeyPatternMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMaskRightMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMaskRightMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyGainMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyGainMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMaskEnableMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMaskEnableMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyOnAirMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyOnAirMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyAutoMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyAutoMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyPreMultiplyMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyPreMultiplyMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMacroOpBase.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMacroOpBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyClipMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyClipMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMaskLeftMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMaskLeftMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMaskTopMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMaskTopMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyFillInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyFillInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMaskBottomMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyMaskBottomMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyRateMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyRateMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyCutInputMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyCutInputMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyTieMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyTieMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyInvertMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\DownstreamKey\DownstreamKeyInvertMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Media\MediaPlayerSourceStillMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Media\MediaPlayerSourceStillMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Media\MediaPlayerPlayMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Media\MediaPlayerPlayMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Media\MediaPlayerGoToBeginningMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Media\MediaPlayerGoToBeginningMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Media\MediaPlayerSourceClipIndexMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Media\MediaPlayerSourceClipIndexMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Media\MediaPlayerPauseMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Media\MediaPlayerPauseMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Media\MediaPlayerGoToFrameMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Media\MediaPlayerGoToFrameMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Media\MediaPlayerSourceClipMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Media\MediaPlayerSourceClipMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Media\MediaPlayerSourceStillIndexMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Media\MediaPlayerSourceStillIndexMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Media\MediaPlayerMacroOpBase.cs">
+      <Link>Atem\LibAtem\MacroOperations\Media\MediaPlayerMacroOpBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\MacroOperations\Media\MediaPlayerLoopMacroOp.cs">
+      <Link>Atem\LibAtem\MacroOperations\Media\MediaPlayerLoopMacroOp.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\TimeCodeRequestCommand.cs">
+      <Link>Atem\LibAtem\Commands\TimeCodeRequestCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\TallyBySourceCommand.cs">
+      <Link>Atem\LibAtem\Commands\TallyBySourceCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\ColorGeneratorSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\ColorGeneratorSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\TimeCodeCommand.cs">
+      <Link>Atem\LibAtem\Commands\TimeCodeCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SerializableCommand.cs">
+      <Link>Atem\LibAtem\Commands\SerializableCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\TallyByInputCommand.cs">
+      <Link>Atem\LibAtem\Commands\TallyByInputCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\TallyTlFcCommand.cs">
+      <Link>Atem\LibAtem\Commands\TallyTlFcCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\CommandParser.cs">
+      <Link>Atem\LibAtem\Commands\CommandParser.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\WarningCommand.cs">
+      <Link>Atem\LibAtem\Commands\WarningCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\ICommand.cs">
+      <Link>Atem\LibAtem\Commands\ICommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\TallyChannelConfigCommand.cs">
+      <Link>Atem\LibAtem\Commands\TallyChannelConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\AuxSourceGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\AuxSourceGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\StartupStateClearCommand.cs">
+      <Link>Atem\LibAtem\Commands\StartupStateClearCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\StartupStateSaveCommand.cs">
+      <Link>Atem\LibAtem\Commands\StartupStateSaveCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\InitializationCompleteCommand.cs">
+      <Link>Atem\LibAtem\Commands\InitializationCompleteCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\AuxSourceSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\AuxSourceSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\CommandQueue.cs">
+      <Link>Atem\LibAtem\Commands\CommandQueue.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\TimecodeLockedCommand.cs">
+      <Link>Atem\LibAtem\Commands\TimecodeLockedCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\ColorGeneratorGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\ColorGeneratorGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\SDI3GLeveloutputGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\SDI3GLeveloutputGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\MixMinusOutputSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\MixMinusOutputSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\InputPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\InputPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\VideoModeGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\VideoModeGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\DownConvertModeGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\DownConvertModeGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\DownConvertAvailableModesCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\DownConvertAvailableModesCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\DownConvertModeSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\DownConvertModeSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\VideoModeSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\VideoModeSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\InputPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\InputPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\SerialPortModeCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\SerialPortModeCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\MixMinusOutputGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\MixMinusOutputGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\SDI3GLeveloutputSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\SDI3GLeveloutputSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXCPCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXCPCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXCCCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXCCCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckSettingsGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckSettingsGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXSSCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXSSCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckSettingsSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckSettingsSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewWindowVuMeterSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewWindowVuMeterSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewerAvailableModesCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewerAvailableModesCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewPropertiesSetV8Command.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewPropertiesSetV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewWindowInputGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewWindowInputGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewVuOpacityCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewVuOpacityCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewWindowSafeAreaCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewWindowSafeAreaCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewPropertiesGetV8Command.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewPropertiesGetV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewWindowInputSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewWindowInputSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewWindowVuMeterGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewWindowVuMeterGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\MultiviewerConfigCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\MultiviewerConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\SuperSourceConfigV8Command.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\SuperSourceConfigV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\ProductIdentifierCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\ProductIdentifierCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\DVEConfigCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\DVEConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\MixEffectBlockConfigCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\MixEffectBlockConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\FairlightAudioMixerConfigCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\FairlightAudioMixerConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\MacroPoolConfigCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\MacroPoolConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\TopologyCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\TopologyCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\AudioMixerConfigCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\AudioMixerConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\VideoMixerConfigCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\VideoMixerConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\SuperSourceConfigCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\SuperSourceConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\VersionCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\VersionCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\PowerStatusCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\PowerStatusCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\TopologyV8Command.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\TopologyV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\MediaPoolConfigCommand.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\MediaPoolConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\MultiviewerConfigV8Command.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\MultiviewerConfigV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\CameraControl\CCstCommand.cs">
+      <Link>Atem\LibAtem\Commands\CameraControl\CCstCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferDataCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferDataCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferUploadContinueCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferUploadContinueCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\LockStateSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\LockStateSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferCompleteCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferCompleteCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\LockObtainedCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\LockObtainedCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferUploadRequestCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferUploadRequestCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferFileDescriptionCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferFileDescriptionCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferErrorCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferErrorCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferDownloadRequestCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferDownloadRequestCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferAckCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferAckCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\LockStateChangedCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\LockStateChangedCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerResetPeaksCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerResetPeaksCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerSendLevelsCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerSendLevelsCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerMonitorSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerMonitorSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerInputGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerInputGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerTallyCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerTallyCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerTalkbackPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerTalkbackPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerHeadphoneSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerHeadphoneSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\TalkbackMixerInputPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\TalkbackMixerInputPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerMasterSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerMasterSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerHeadphoneGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerHeadphoneGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerTalkbackPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerTalkbackPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerMasterGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerMasterGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\TalkbackMixerInputPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\TalkbackMixerInputPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerInputGetV8Command.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerInputGetV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerMonitorGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerMonitorGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerLevelsCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerLevelsCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerInputSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\AudioMixerInputSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceDynamicsResetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceDynamicsResetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceCompressorSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceCompressorSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerInputSetV811Command.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerInputSetV811Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceLimiterSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceLimiterSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerAnalogAudioSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerAnalogAudioSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterEqualizerBandGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterEqualizerBandGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerInputGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerInputGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerResetPeakLevelsCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerResetPeakLevelsCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceDeleteCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceDeleteCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterLimiterGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterLimiterGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerTallyCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerTallyCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMonitorGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMonitorGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceExpanderSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceExpanderSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceEqualizerBandSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceEqualizerBandSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterCompressorSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterCompressorSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerInputGetV811Command.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerInputGetV811Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterDynamicsResetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterDynamicsResetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceExpanderGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceExpanderGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSendLevelsCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSendLevelsCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMonitorSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMonitorSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterLimiterSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterLimiterSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceResetPeakLevelsCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceResetPeakLevelsCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterCompressorGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterCompressorGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceEqualizerBandGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceEqualizerBandGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceLimiterGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceLimiterGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceCompressorGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceCompressorGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceEqualizerResetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceEqualizerResetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceLevelsCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerSourceLevelsCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterEqualizerResetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterEqualizerResetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerInputSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerInputSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterLevelsCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterLevelsCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterEqualizerBandSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerMasterEqualizerBandSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\Fairlight\FairlightMixerAnalogAudioGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Audio\Fairlight\FairlightMixerAnalogAudioGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Macro\MacroPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Macro\MacroPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Macro\MacroAddTimedPauseCommand.cs">
+      <Link>Atem\LibAtem\Commands\Macro\MacroAddTimedPauseCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Macro\MacroRecordCommand.cs">
+      <Link>Atem\LibAtem\Commands\Macro\MacroRecordCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Macro\MacroActionCommand.cs">
+      <Link>Atem\LibAtem\Commands\Macro\MacroActionCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Macro\MacroRunPropertiesCommand.cs">
+      <Link>Atem\LibAtem\Commands\Macro\MacroRunPropertiesCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Macro\MacroRecordingStatusGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Macro\MacroRecordingStatusGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Macro\MacroRunStatusGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Macro\MacroRunStatusGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Macro\MacroPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Macro\MacroPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourceBoxGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourceBoxGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourcePropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourcePropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourceCascadeCommand.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourceCascadeCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourcePropertiesSetV8Command.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourcePropertiesSetV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourceBoxGetV8Command.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourceBoxGetV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourceBorderSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourceBorderSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourceBorderGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourceBorderGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourceBoxSetV8Command.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourceBoxSetV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourcePropertiesGetV8Command.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourcePropertiesGetV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourceBoxSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourceBoxSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\SuperSource\SuperSourcePropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\SuperSource\SuperSourcePropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\FadeToBlackRateSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\FadeToBlackRateSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\FadeToBlackAutoCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\FadeToBlackAutoCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\PreviewInputSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\PreviewInputSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\ProgramInputGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\ProgramInputGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\MixEffectCutCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\MixEffectCutCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\FadeToBlackPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\FadeToBlackPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\FadeToBlackStateCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\FadeToBlackStateCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\FadeToBlackCutCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\FadeToBlackCutCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\MixEffectAutoCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\MixEffectAutoCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\ProgramInputSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\ProgramInputSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\PreviewInputGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\PreviewInputGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionPositionSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionPositionSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionWipeGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionWipeGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionMixSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionMixSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionStingerGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionStingerGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionDipGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionDipGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionDVEGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionDVEGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionPreviewSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionPreviewSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionPreviewGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionPreviewGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionDVESetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionDVESetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionDipSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionDipSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionWipeSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionWipeSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionPositionGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionPositionGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionStingerSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionStingerSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Transition\TransitionMixGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Transition\TransitionMixGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyMaskSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyMaskSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyDVEGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyDVEGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyCutSourceSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyCutSourceSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyPatternSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyPatternSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyChromaSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyChromaSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaSampleGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaSampleGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyOnAirGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyOnAirGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFillSourceSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFillSourceSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaResetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaResetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyLumaSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyLumaSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyKeyframeGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyKeyframeGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyOnAirSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyOnAirSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaSampleSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaSampleSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyTypeSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyTypeSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyKeyframeSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyKeyframeSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyLumaGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyLumaGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyDVESetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyDVESetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyChromaGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyChromaGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyPatternGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyPatternGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyStateGetV8Command.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyStateGetV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyCutSourceSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyCutSourceSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyAutoCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyAutoCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyAutoV8Command.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyAutoV8Command.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyFillSourceSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyFillSourceSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyMaskSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyMaskSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyOnAirSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyOnAirSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyTieSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyTieSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeySourceGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeySourceGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyRateSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyRateSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyStateGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyStateGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DownstreamKey\DownstreamKeyGeneralSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\DownstreamKey\DownstreamKeyGeneralSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolStillSetFilenameCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolStillSetFilenameCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolClearClipCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolClearClipCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPlayerSourceSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPlayerSourceSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolSettingsSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolSettingsSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolCaptureStillCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolCaptureStillCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolAudioDescriptionCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolAudioDescriptionCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPlayerClipStatusGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPlayerClipStatusGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolClearStillCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolClearStillCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolSettingsGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolSettingsGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolSetClipCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolSetClipCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolClipDescriptionCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolClipDescriptionCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolFrameDescriptionCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolFrameDescriptionCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPlayerClipStatusSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPlayerClipStatusSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPlayerSourceGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPlayerSourceGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolClearAudioCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolClearAudioCommand.cs</Link>
+    </Compile>
   </ItemGroup>
 </Project>
