@@ -16,6 +16,17 @@ steps:
   name: clientid
   inputs:
     secureFile: 'client_id.json'
+  
+- task: DownloadSecureFile@1
+  name: appconfig
+  inputs:
+    secureFile: 'App.config'
+
+- script: |
+    echo Installing $(clientid.secureFilePath)...
+    cp $(clientid.secureFilePath) $(System.DefaultWorkingDirectory)\ObsBridgeCore
+    echo Installing $(appconfig.secureFilePath)...
+    cp $(appconfig.secureFilePath) $(System.DefaultWorkingDirectory)\ObsBridgeCore
 
 - script: |
     echo Installing $(clientid.secureFilePath)...
