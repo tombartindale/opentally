@@ -43,6 +43,12 @@ namespace ObsBridge
         public string ClientPassword { get; set; }
     }
 
+    [Verb("logout", HelpText = "Remove Google credentials for this instance")]
+    class LogoutOptions : MainOptions
+    {
+        
+    }
+
     class MainClass
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
@@ -92,6 +98,13 @@ namespace ObsBridge
                     .WithParsed<MainOptions>(async o =>
                     {
                         CurrentOptions = o;
+
+                        if (CurrentOptions is LogoutOptions)
+                        {
+                            Logger.Info($"Logging Out...");
+                            Logout();
+                            Environment.Exit(0);
+                        }
 
                         await SetupFirebase();
 
