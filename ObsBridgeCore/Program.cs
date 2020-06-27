@@ -94,7 +94,7 @@ namespace ObsBridge
 
                 Logger.Info("Starting OBS Bridge");
 
-                Parser.Default.ParseArguments(args,types)
+                Parser.Default.ParseArguments(args, types)
                     .WithParsed<MainOptions>(async o =>
                     {
                         CurrentOptions = o;
@@ -129,6 +129,10 @@ namespace ObsBridge
                         CurrentSource.OnTallyChange += CurrentSource_OnTallyChange;
                         MainInstance.SourceType = tt.Name;
                         CurrentSource.Connect();
+                    })
+                    .WithNotParsed((o) =>
+                    {
+                        Environment.Exit(0);
                     });
             }
 

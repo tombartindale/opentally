@@ -28,10 +28,6 @@ steps:
     echo Installing $(appconfig.secureFilePath)...
     cp $(appconfig.secureFilePath) $(System.DefaultWorkingDirectory)\ObsBridgeCore
 
-- script: |
-    echo Installing $(clientid.secureFilePath)...
-    cp $(clientid.secureFilePath) $(System.DefaultWorkingDirectory)\ObsBridgeCore
-
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'

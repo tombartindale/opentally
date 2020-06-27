@@ -199,7 +199,7 @@ namespace ObsBridgeCore.Sources
             }
             catch (Exception ex)
             {
-
+                Logger.Error(ex);
             }
         }
 

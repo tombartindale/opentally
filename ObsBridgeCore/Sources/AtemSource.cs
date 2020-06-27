@@ -139,44 +139,60 @@ namespace ObsBridgeCore.Sources
 
                 if (cmd is InputPropertiesGetCommand)
                 {
-                    //var top = cmd as TopologyV811Command;
-                    //var count = top.VideoSources;
 
-                    if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input1)
-                        Sources[0] = ((InputPropertiesGetCommand)cmd).LongName;
+                    try
+                    {
+                        //var top = cmd as TopologyV811Command;
+                        //var count = top.VideoSources;
 
-                    if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input2)
-                        Sources[1] = ((InputPropertiesGetCommand)cmd).LongName;
+                        if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input1)
+                            Sources[0] = ((InputPropertiesGetCommand)cmd).LongName;
 
-                    if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input3)
-                        Sources[2] = ((InputPropertiesGetCommand)cmd).LongName;
+                        if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input2)
+                            Sources[1] = ((InputPropertiesGetCommand)cmd).LongName;
 
-                    if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input4)
-                        Sources[3] = ((InputPropertiesGetCommand)cmd).LongName;
+                        if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input3)
+                            Sources[2] = ((InputPropertiesGetCommand)cmd).LongName;
 
-                    OnSourcesChanged?.Invoke(Sources);
+                        if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input4)
+                            Sources[3] = ((InputPropertiesGetCommand)cmd).LongName;
+
+                        OnSourcesChanged?.Invoke(Sources);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex);
+                    }
                 }
 
                 if (cmd is TallyByInputCommand)
                 {
                     //first bool is program, second is preview?
                     var tally = ((TallyByInputCommand)cmd).Tally;
-                    
-                    for (int i=0;i<Sources.Count;i++)
-                    {
-                        if (tally[i].Item1)
-                            Tally.Add(Sources[i]);
-                        else
-                            Tally.Remove(Sources[i]);
 
-                        if (tally[i].Item2)
-                            Preview.Add(Sources[i]);
-                        else
-                            Preview.Remove(Sources[i]);
+                    try
+                    {
+                        for (int i = 0; i < Sources.Count; i++)
+                        {
+                            if (tally[i].Item1)
+                                Tally.Add(Sources[i]);
+                            else
+                                Tally.Remove(Sources[i]);
+
+                            if (tally[i].Item2)
+                                Preview.Add(Sources[i]);
+                            else
+                                Preview.Remove(Sources[i]);
+                        }
+
+                        OnTallyChange?.Invoke(Tally.ToList());
+                        OnPreviewTallyChange?.Invoke(Preview.ToList());
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex);
                     }
 
-                    OnTallyChange?.Invoke(Tally.ToList());
-                    OnPreviewTallyChange?.Invoke(Preview.ToList());
                 }
             }
         }
