@@ -89,23 +89,10 @@ namespace ObsBridgeCore.Sources
         {
             OnOnlineChanged?.Invoke(true);
             OnNameChanged?.Invoke("ATEM Switcher");
-
-            if (Sources.Count == 0)
-            {
-
-                Sources.Add("Input 1");
-                Sources.Add("Input 2");
-                Sources.Add("Input 3");
-                Sources.Add("Input 4");
-
-                OnSourcesChanged?.Invoke(Sources);
-                //atem.SendCommand(new TopologyCommand());
-            }
-
         }
 
-        DateTime? recordingstarted;
-        uint lastseentimecode;
+        //DateTime? recordingstarted;
+        //uint lastseentimecode;
 
         private void Atem_OnReceive(object sender, IReadOnlyList<LibAtem.Commands.ICommand> commands)
         {
@@ -139,11 +126,21 @@ namespace ObsBridgeCore.Sources
 
                 if (cmd is InputPropertiesGetCommand)
                 {
-
                     try
                     {
                         //var top = cmd as TopologyV811Command;
                         //var count = top.VideoSources;
+
+                        if (Sources.Count == 0)
+                        {
+
+                            Sources.Add("Input 1");
+                            Sources.Add("Input 2");
+                            Sources.Add("Input 3");
+                            Sources.Add("Input 4");
+
+                            OnSourcesChanged?.Invoke(Sources);
+                        }
 
                         if (((InputPropertiesGetCommand)cmd).Id == LibAtem.Common.VideoSource.Input1)
                             Sources[0] = ((InputPropertiesGetCommand)cmd).LongName;

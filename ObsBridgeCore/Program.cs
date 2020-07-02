@@ -5,16 +5,16 @@ using System.Threading.Tasks;
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Database.Query;
-using OBS.WebSocket.NET;
 using System.Linq;
 using CommandLine;
-using OBS.WebSocket.NET.Types;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
 using Google.Apis.Util.Store;
 using Google.Apis.Auth.OAuth2;
 using ObsBridgeCore;
+using System.Net.Sockets;
+using System.Net;
 
 namespace ObsBridge
 {
@@ -41,6 +41,8 @@ namespace ObsBridge
 
         [Option('c', "password", Required = false, Default = "", HelpText = "Password for client connections")]
         public string ClientPassword { get; set; }
+        [Option('o', "offline", Required = false, Default = false, HelpText = "Only connect offline (without firebase)")]
+        public bool Offline { get; set; }
     }
 
     [Verb("logout", HelpText = "Remove Google credentials for this instance")]
@@ -87,16 +89,26 @@ namespace ObsBridge
 
             ISource CurrentSource;
 
+            UdpClient udpclient = new UdpClient();
+
+            IPAddress multicastaddress = IPAddress.Parse("224.0.0.0");
+
+            IPEndPoint remoteep;
+            
+
             public void Run(string[] args)
             {
 
                 var types = LoadVerbs();
 
                 Logger.Info("Starting OBS Bridge");
-
+                
                 Parser.Default.ParseArguments(args, types)
                     .WithParsed<MainOptions>(async o =>
                     {
+                        udpclient.JoinMulticastGroup(multicastaddress);
+                        remoteep = new IPEndPoint(multicastaddress, 8854);
+
                         CurrentOptions = o;
 
                         if (CurrentOptions is LogoutOptions)
@@ -106,7 +118,16 @@ namespace ObsBridge
                             Environment.Exit(0);
                         }
 
-                        await SetupFirebase();
+                        if (!CurrentOptions.Offline)
+                        {
+                            Logger.Info($"Connecting to Firebase...");
+                            await SetupFirebase();
+                            MainInstance.uid = auth.User.LocalId;
+                        }
+
+                        MainInstance.Name = $"[{Environment.MachineName}] Loading...";
+
+                        UpdateInstance();
 
                         if (!string.IsNullOrEmpty(o.ClientPassword))
                             MainInstance.Pwd = EncryptPwd(o.ClientPassword);
@@ -233,7 +254,7 @@ namespace ObsBridge
 
             async Task SetupFirebase()
             {
-                Logger.Info("Logging in");
+                Logger.Info("Logging in...");
 
                 await LoginToGoogle();
 
@@ -249,28 +270,54 @@ namespace ObsBridge
                   {
                       AuthTokenAsyncFactory = () => Task.FromResult(auth.FirebaseToken)
                   });
-
-                MainInstance.Name = $"[{Environment.MachineName}] Loading...";
-
-                MainInstance.uid = auth.User.LocalId;
-
-                UpdateInstance();
             }
 
             async void UpdateInstance()
             {
-                try
+                SendUDP();
+
+                if (!CurrentOptions.Offline)
                 {
-                    await FirebaseClient.Child("instances/" + Environment.MachineName).PatchAsync(MainInstance);
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(e, "Firebase Error");
-                    await SetupFirebase();
+                    try
+                    {
+                        await FirebaseClient.Child("instances/" + Environment.MachineName).PatchAsync(MainInstance);
+                    }
+                    catch (Exception e)
+                    {
+                        Logger.Error(e, "Firebase Error");
+                        await SetupFirebase();
+                    }
                 }
             }
 
-            
+            void SendUDP()
+            {
+
+                byte[] data = { 0, 0};
+                byte mask = 0b_0000_0001;
+
+                for (int i=0;i<=Math.Min(MainInstance.Sources.Count-1,7);i++)
+                {
+                    if (MainInstance.PreviewTally.Contains(MainInstance.Sources[i]))
+                    {
+                        data[0] |= mask;
+                    }
+                    mask = (byte)(mask << 1);
+                }
+
+                mask = 0b_0000_0001;
+
+                for (int i = 0; i<=Math.Min(MainInstance.Sources.Count-1, 7); i++)
+                {
+                    if (MainInstance.Tally.Contains(MainInstance.Sources[i]))
+                    {
+                        data[1] |= mask;
+                    }
+                    mask = (byte)(mask << 1);
+                }
+
+                udpclient.Send(data, data.Length, remoteep);
+            }
         }
     }
 }
