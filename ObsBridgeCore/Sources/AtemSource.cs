@@ -36,8 +36,16 @@ namespace ObsBridgeCore.Sources
         public override event Action<List<string>> OnPreviewTallyChange;
         public override event Action<List<string>> OnSourcesChanged;
         public override event Action<bool> OnOnlineChanged;
-        public override event Action<DateTime> OnRecordingStarted;
-        public override event Action<DateTime> OnRecordingStopped;
+        public override event Action<DateTime> OnRecordingStarted
+        {
+            add { }
+            remove { }
+        }
+        public override event Action<DateTime> OnRecordingStopped
+        {
+            add { }
+            remove { }
+        }
         public override event Action<DateTime> OnStreamingStarted;
         public override event Action<DateTime> OnStreamingStopped;
         public override event Action<string> OnNameChanged;
