@@ -126,6 +126,10 @@ namespace ObsBridge
                         }
 
                         MainInstance.Name = $"[{Environment.MachineName}] Loading...";
+                        MainInstance.Sources = new List<string>();
+                        MainInstance.Tally = new List<string>();
+                        MainInstance.PreviewTally = new List<string>();
+
 
                         UpdateInstance();
 
