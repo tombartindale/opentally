@@ -297,7 +297,7 @@ namespace ObsBridge
             void SendUDP()
             {
 
-                byte[] data = { 0, 0};
+                byte[] data = { 0, 0, 0};
                 byte mask = 0b_0000_0001;
 
                 for (int i=0;i<=Math.Min(MainInstance.Sources.Count-1,7);i++)
@@ -311,7 +311,9 @@ namespace ObsBridge
 
                 mask = 0b_0000_0001;
 
-                for (int i = 0; i<=Math.Min(MainInstance.Sources.Count-1, 7); i++)
+                // if (MainInstance.Streaming)
+                // {
+                for (int i = 0; i <= Math.Min(MainInstance.Sources.Count - 1, 7); i++)
                 {
                     if (MainInstance.Tally.Contains(MainInstance.Sources[i]))
                     {
@@ -319,6 +321,16 @@ namespace ObsBridge
                     }
                     mask = (byte)(mask << 1);
                 }
+                // }
+
+                //data[0] = 0b_1111_1111;
+                //data[1] = 0b_1111_1111;
+
+                //add is live...
+                if (MainInstance.Recording || MainInstance.Streaming)
+                    data[2] = 1;
+
+                //data[2] = 0;
 
                 udpclient.Send(data, data.Length, remoteep);
             }
