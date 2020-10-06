@@ -1,0 +1,55 @@
+# .NET Desktop
+# Build and run tests for .NET Desktop or Windows classic desktop solutions.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+
+trigger:
+  tags:
+    include:
+    - '*'
+
+pool:
+  vmImage: 'windows-latest'
+
+steps:
+- task: DownloadSecureFile@1
+  name: clientid
+  inputs:
+    secureFile: 'client_id.json'
+  
+- task: DownloadSecureFile@1
+  name: appconfig
+  inputs:
+    secureFile: 'App.config'
+
+- script: |
+    echo Installing $(clientid.secureFilePath)...
+    cp $(clientid.secureFilePath) $(System.DefaultWorkingDirectory)\OpenTallyBridgeCore
+    echo Installing $(appconfig.secureFilePath)...
+    cp $(appconfig.secureFilePath) $(System.DefaultWorkingDirectory)\OpenTallyBridgeCore
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r win-x64 -o $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: false
+    workingDirectory: '$(System.DefaultWorkingDirectory)\OpenTallyBridgeCore'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64 -o $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: false
+    workingDirectory: '$(System.DefaultWorkingDirectory)\OpenTallyBridgeCore'
+
+- task: GitHubRelease@1
+  inputs:
+    gitHubConnection: 'github.com_tombartindale'
+    repositoryName: 'tombartindale/opentally'
+    action: 'create'
+    target: '$(Build.SourceVersion)'
+    tagSource: 'gitTag'
+    changeLogCompareToRelease: 'lastFullRelease'
+    changeLogType: 'commitBased'

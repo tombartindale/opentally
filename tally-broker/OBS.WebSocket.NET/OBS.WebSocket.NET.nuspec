@@ -1,0 +1,34 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+	<metadata>
+		<id>OBS.WebSocket.NET</id>
+		<version>4.7.2</version>
+
+		<authors>Alexander Schmid</authors>
+		<owners>DurtyFree</owners>
+
+		<projectUrl>https://github.com/DurtyFree/OBS.WebSocket.NET</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+
+		<description>.NET Standard object oriented C# .NET library to communicate with an OBS-WebSocket Server</description>
+		<releaseNotes>Updated API to .NET Standard library & added support OBS-WebSocket 4.7.0 protocol: https://github.com/Palakis/obs-websocket/releases/tag/4.7.0 </releaseNotes>
+
+    <language>en-US</language>
+    <icon>images\icon.png</icon>
+
+		<copyright>Copyright 2019 (c) Alexander Schmid</copyright>
+		<tags>obs studio websocket api streaming twitch library api server obs-websocket durtyfree core standard</tags>
+
+		<dependencies>
+			<dependency id="Newtonsoft.Json" version="12.0.3" />
+      <dependency id="SuperSocket.ClientEngine.Core" version="0.10.0" />
+      <dependency id="WebSocket4Net" version="0.15.2" />
+		</dependencies>
+	</metadata>
+
+	<files>
+    <file src="bin\Release\OBS.WebSocket.NET.dll" target="lib" />
+    <file src="bin\Release\OBS.WebSocket.NET.xml" target="lib" />
+    <file src="icon.png" target="images\" />
+	</files>
+</package>
