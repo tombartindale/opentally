@@ -38,7 +38,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)\tally-bridge\OpenTallyBridgeCore\shortcuts\win-x64'
+    SourceFolder: '$(System.DefaultWorkingDirectory)\tally-bridge\shortcuts\win-x64'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)\win-x64'
 
@@ -60,7 +60,7 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)\tally-bridge\OpenTallyBridgeCore\shortcuts\osx-x64'
+    SourceFolder: '$(System.DefaultWorkingDirectory)\tally-bridge\shortcuts\osx-x64'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)\osx-x64'
 
