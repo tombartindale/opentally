@@ -24,25 +24,53 @@ steps:
 
 - script: |
     echo Installing $(clientid.secureFilePath)...
-    cp $(clientid.secureFilePath) $(System.DefaultWorkingDirectory)\OpenTallyBridgeCore
+    cp $(clientid.secureFilePath) $(System.DefaultWorkingDirectory)\tally-bridge\OpenTallyBridgeCore
     echo Installing $(appconfig.secureFilePath)...
-    cp $(appconfig.secureFilePath) $(System.DefaultWorkingDirectory)\OpenTallyBridgeCore
+    cp $(appconfig.secureFilePath) $(System.DefaultWorkingDirectory)\tally-bridge\OpenTallyBridgeCore
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: false
-    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r win-x64 -o $(Build.ArtifactStagingDirectory)'
+    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r win-x64 -o $(Build.ArtifactStagingDirectory)/win-x64'
     zipAfterPublish: false
-    workingDirectory: '$(System.DefaultWorkingDirectory)\OpenTallyBridgeCore'
+    workingDirectory: '$(System.DefaultWorkingDirectory)\tally-bridge\OpenTallyBridgeCore'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)\tally-bridge\OpenTallyBridgeCore\shortcuts\win-x64'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\win-x64'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)\win-x64'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\OpenTally-win-x64.zip'
+    replaceExistingArchive: true
 
 - task: DotNetCoreCLI@2
   inputs:
     command: 'publish'
     publishWebProjects: false
-    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64 -o $(Build.ArtifactStagingDirectory)'
+    arguments: '-c Release -p:PublishTrimmed=true -p:SelfContained=true -p:PublishSingleFile=true -r osx-x64 -o $(Build.ArtifactStagingDirectory)/osx-x64'
     zipAfterPublish: false
-    workingDirectory: '$(System.DefaultWorkingDirectory)\OpenTallyBridgeCore'
+    workingDirectory: '$(System.DefaultWorkingDirectory)\tally-bridge\OpenTallyBridgeCore'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)\tally-bridge\OpenTallyBridgeCore\shortcuts\osx-x64'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)\osx-x64'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.ArtifactStagingDirectory)\osx-x64'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)\OpenTally-osx-x64.zip'
+    replaceExistingArchive: true
 
 - task: GitHubRelease@1
   inputs:
