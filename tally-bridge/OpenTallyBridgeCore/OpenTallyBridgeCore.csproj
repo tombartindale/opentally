@@ -38,6 +38,11 @@
     <EmbeddedResource Include="client_id.json" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\LibAtem\LibAtem\LibAtem.csproj">
+      <Link>Atem\LibAtem\LibAtem.csproj</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -85,6 +90,9 @@
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\DownloadMediaStillJob.cs">
       <Link>Atem\LibAtem\Net\DataTransfer\DownloadMediaStillJob.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\UploadMultiViewJob.cs">
+      <Link>Atem\LibAtem\Net\DataTransfer\UploadMultiViewJob.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Net\DataTransfer\DownloadMacroJob.cs">
       <Link>Atem\LibAtem\Net\DataTransfer\DownloadMacroJob.cs</Link>
@@ -152,8 +160,20 @@
     <Compile Include="..\LibAtem\LibAtem\Serialization\ByteArrayAttribute.cs">
       <Link>Atem\LibAtem\Serialization\ByteArrayAttribute.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\Int8Attribute.cs">
+      <Link>Atem\LibAtem\Serialization\Int8Attribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\IpAddressAttribute.cs">
+      <Link>Atem\LibAtem\Serialization\IpAddressAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\HyperDeckTimeAttribute.cs">
+      <Link>Atem\LibAtem\Serialization\HyperDeckTimeAttribute.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Serialization\UInt16ListAttribute.cs">
       <Link>Atem\LibAtem\Serialization\UInt16ListAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Serialization\UInt32ListAttribute.cs">
+      <Link>Atem\LibAtem\Serialization\UInt32ListAttribute.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Serialization\Int32Attribute.cs">
       <Link>Atem\LibAtem\Serialization\Int32Attribute.cs</Link>
@@ -188,6 +208,9 @@
     <Compile Include="..\LibAtem\LibAtem\Common\StingerSource.cs">
       <Link>Atem\LibAtem\Common\StingerSource.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\Hyperdeck.cs">
+      <Link>Atem\LibAtem\Common\Hyperdeck.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Common\PortType.cs">
       <Link>Atem\LibAtem\Common\PortType.cs</Link>
     </Compile>
@@ -197,11 +220,17 @@
     <Compile Include="..\LibAtem\LibAtem\Common\VideoSource.cs">
       <Link>Atem\LibAtem\Common\VideoSource.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\Recording.cs">
+      <Link>Atem\LibAtem\Common\Recording.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Common\SDI3GOutputLevel.cs">
       <Link>Atem\LibAtem\Common\SDI3GOutputLevel.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Common\SuperSourceArtOption.cs">
       <Link>Atem\LibAtem\Common\SuperSourceArtOption.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\Streaming.cs">
+      <Link>Atem\LibAtem\Common\Streaming.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Common\MacroOperationType.cs">
       <Link>Atem\LibAtem\Common\MacroOperationType.cs</Link>
@@ -224,6 +253,9 @@
     <Compile Include="..\LibAtem\LibAtem\Common\MixMinusMode.cs">
       <Link>Atem\LibAtem\Common\MixMinusMode.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\TimeCodeMode.cs">
+      <Link>Atem\LibAtem\Common\TimeCodeMode.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Common\MultiViewLayout.cs">
       <Link>Atem\LibAtem\Common\MultiViewLayout.cs</Link>
     </Compile>
@@ -232,6 +264,9 @@
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Common\DVEEffect.cs">
       <Link>Atem\LibAtem\Common\DVEEffect.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Common\Camera.cs">
+      <Link>Atem\LibAtem\Common\Camera.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Common\AudioSource.cs">
       <Link>Atem\LibAtem\Common\AudioSource.cs</Link>
@@ -827,6 +862,9 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\TimeCodeCommand.cs">
       <Link>Atem\LibAtem\Commands\TimeCodeCommand.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\TimeCodeConfigGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\TimeCodeConfigGetCommand.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\SerializableCommand.cs">
       <Link>Atem\LibAtem\Commands\SerializableCommand.cs</Link>
     </Compile>
@@ -854,6 +892,9 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\StartupStateClearCommand.cs">
       <Link>Atem\LibAtem\Commands\StartupStateClearCommand.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\TimeCodeConfigSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\TimeCodeConfigSetCommand.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\StartupStateSaveCommand.cs">
       <Link>Atem\LibAtem\Commands\StartupStateSaveCommand.cs</Link>
     </Compile>
@@ -875,6 +916,9 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\SDI3GLeveloutputGetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\SDI3GLeveloutputGetCommand.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\DownConvertVideoModeSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\DownConvertVideoModeSetCommand.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\MixMinusOutputSetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\MixMinusOutputSetCommand.cs</Link>
     </Compile>
@@ -887,17 +931,20 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\DownConvertModeGetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\DownConvertModeGetCommand.cs</Link>
     </Compile>
-    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\DownConvertAvailableModesCommand.cs">
-      <Link>Atem\LibAtem\Commands\Settings\DownConvertAvailableModesCommand.cs</Link>
-    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\DownConvertModeSetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\DownConvertModeSetCommand.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\VideoModeSetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\VideoModeSetCommand.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\InputNameResetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\InputNameResetCommand.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\InputPropertiesGetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\InputPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\AutoVideoModeCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\AutoVideoModeCommand.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\SerialPortModeCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\SerialPortModeCommand.cs</Link>
@@ -905,29 +952,41 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\MixMinusOutputGetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\MixMinusOutputGetCommand.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\DownConvertVideoModeGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\DownConvertVideoModeGetCommand.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\SDI3GLeveloutputSetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\SDI3GLeveloutputSetCommand.cs</Link>
     </Compile>
-    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXCPCommand.cs">
-      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXCPCommand.cs</Link>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckStorageGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckStorageGetCommand.cs</Link>
     </Compile>
-    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXCCCommand.cs">
-      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXCCCommand.cs</Link>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckPlayerGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckPlayerGetCommand.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckSettingsGetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckSettingsGetCommand.cs</Link>
     </Compile>
-    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXSSCommand.cs">
-      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckRXSSCommand.cs</Link>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckPlayerSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckPlayerSetCommand.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckSettingsSetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckSettingsSetCommand.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckClipInfoCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckClipInfoCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckClipCountCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckClipCountCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\HyperDeck\HyperDeckStorageSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\HyperDeck\HyperDeckStorageSetCommand.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewWindowVuMeterSetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewWindowVuMeterSetCommand.cs</Link>
     </Compile>
-    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewerAvailableModesCommand.cs">
-      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewerAvailableModesCommand.cs</Link>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewVideoModeGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewVideoModeGetCommand.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewPropertiesSetV8Command.cs">
       <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewPropertiesSetV8Command.cs</Link>
@@ -956,6 +1015,48 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewWindowVuMeterGetCommand.cs">
       <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewWindowVuMeterGetCommand.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Settings\Multiview\MultiviewVideoModeSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Settings\Multiview\MultiviewVideoModeSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Talkback\TalkbackMixerPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Talkback\TalkbackMixerPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Talkback\TalkbackMixerInputPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Talkback\TalkbackMixerInputPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Talkback\TalkbackMixerInputPropertiesSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Talkback\TalkbackMixerInputPropertiesSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Talkback\TalkbackMixerPropertiesGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Talkback\TalkbackMixerPropertiesGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Recording\RecordingISOCommand.cs">
+      <Link>Atem\LibAtem\Commands\Recording\RecordingISOCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Recording\RecordingSettingsSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Recording\RecordingSettingsSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Recording\RecordingSwitchDiskCommand.cs">
+      <Link>Atem\LibAtem\Commands\Recording\RecordingSwitchDiskCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Recording\RecordingDurationCommand.cs">
+      <Link>Atem\LibAtem\Commands\Recording\RecordingDurationCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Recording\RecordingStatusGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Recording\RecordingStatusGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Recording\RecordingStatusSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Recording\RecordingStatusSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Recording\RecordingRequestDurationCommand.cs">
+      <Link>Atem\LibAtem\Commands\Recording\RecordingRequestDurationCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Recording\RecordingDiskInfoCommand.cs">
+      <Link>Atem\LibAtem\Commands\Recording\RecordingDiskInfoCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Recording\RecordingSettingsGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Recording\RecordingSettingsGetCommand.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\MultiviewerConfigCommand.cs">
       <Link>Atem\LibAtem\Commands\DeviceProfile\MultiviewerConfigCommand.cs</Link>
     </Compile>
@@ -970,6 +1071,9 @@
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\MixEffectBlockConfigCommand.cs">
       <Link>Atem\LibAtem\Commands\DeviceProfile\MixEffectBlockConfigCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\TopologyV811Command.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\TopologyV811Command.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\FairlightAudioMixerConfigCommand.cs">
       <Link>Atem\LibAtem\Commands\DeviceProfile\FairlightAudioMixerConfigCommand.cs</Link>
@@ -992,6 +1096,9 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\VersionCommand.cs">
       <Link>Atem\LibAtem\Commands\DeviceProfile\VersionCommand.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\MultiviewerConfigV811Command.cs">
+      <Link>Atem\LibAtem\Commands\DeviceProfile\MultiviewerConfigV811Command.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\PowerStatusCommand.cs">
       <Link>Atem\LibAtem\Commands\DeviceProfile\PowerStatusCommand.cs</Link>
     </Compile>
@@ -1004,11 +1111,29 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\DeviceProfile\MultiviewerConfigV8Command.cs">
       <Link>Atem\LibAtem\Commands\DeviceProfile\MultiviewerConfigV8Command.cs</Link>
     </Compile>
-    <Compile Include="..\LibAtem\LibAtem\Commands\CameraControl\CCstCommand.cs">
-      <Link>Atem\LibAtem\Commands\CameraControl\CCstCommand.cs</Link>
+    <Compile Include="..\LibAtem\LibAtem\Commands\CameraControl\CameraControlDeviceOptionsSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\CameraControl\CameraControlDeviceOptionsSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\CameraControl\CameraControlSettingsSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\CameraControl\CameraControlSettingsSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\CameraControl\CameraControlCommandBase.cs">
+      <Link>Atem\LibAtem\Commands\CameraControl\CameraControlCommandBase.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\CameraControl\CameraControlGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\CameraControl\CameraControlGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\CameraControl\CameraControlSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\CameraControl\CameraControlSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\CameraControl\CameraControlSettingsGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\CameraControl\CameraControlSettingsGetCommand.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferDataCommand.cs">
       <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferDataCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferAbortCommand.cs">
+      <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferAbortCommand.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\DataTransferUploadContinueCommand.cs">
       <Link>Atem\LibAtem\Commands\DataTransfer\DataTransferUploadContinueCommand.cs</Link>
@@ -1040,6 +1165,33 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\DataTransfer\LockStateChangedCommand.cs">
       <Link>Atem\LibAtem\Commands\DataTransfer\LockStateChangedCommand.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Streaming\StreamingAudioBitratesCommand.cs">
+      <Link>Atem\LibAtem\Commands\Streaming\StreamingAudioBitratesCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Streaming\StreamingServiceGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Streaming\StreamingServiceGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Streaming\StreamingStatusSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Streaming\StreamingStatusSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Streaming\StreamingDurationCommand.cs">
+      <Link>Atem\LibAtem\Commands\Streaming\StreamingDurationCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Streaming\StreamingStatsCommand.cs">
+      <Link>Atem\LibAtem\Commands\Streaming\StreamingStatsCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Streaming\StreamingAuthenticationCommand.cs">
+      <Link>Atem\LibAtem\Commands\Streaming\StreamingAuthenticationCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Streaming\StreamingRequestDurationCommand.cs">
+      <Link>Atem\LibAtem\Commands\Streaming\StreamingRequestDurationCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Streaming\StreamingStatusGetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Streaming\StreamingStatusGetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Streaming\StreamingServiceSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\Streaming\StreamingServiceSetCommand.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerResetPeaksCommand.cs">
       <Link>Atem\LibAtem\Commands\Audio\AudioMixerResetPeaksCommand.cs</Link>
     </Compile>
@@ -1058,14 +1210,8 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerTallyCommand.cs">
       <Link>Atem\LibAtem\Commands\Audio\AudioMixerTallyCommand.cs</Link>
     </Compile>
-    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerTalkbackPropertiesGetCommand.cs">
-      <Link>Atem\LibAtem\Commands\Audio\AudioMixerTalkbackPropertiesGetCommand.cs</Link>
-    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerHeadphoneSetCommand.cs">
       <Link>Atem\LibAtem\Commands\Audio\AudioMixerHeadphoneSetCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\TalkbackMixerInputPropertiesGetCommand.cs">
-      <Link>Atem\LibAtem\Commands\Audio\TalkbackMixerInputPropertiesGetCommand.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerMasterSetCommand.cs">
       <Link>Atem\LibAtem\Commands\Audio\AudioMixerMasterSetCommand.cs</Link>
@@ -1073,14 +1219,8 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerHeadphoneGetCommand.cs">
       <Link>Atem\LibAtem\Commands\Audio\AudioMixerHeadphoneGetCommand.cs</Link>
     </Compile>
-    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerTalkbackPropertiesSetCommand.cs">
-      <Link>Atem\LibAtem\Commands\Audio\AudioMixerTalkbackPropertiesSetCommand.cs</Link>
-    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerMasterGetCommand.cs">
       <Link>Atem\LibAtem\Commands\Audio\AudioMixerMasterGetCommand.cs</Link>
-    </Compile>
-    <Compile Include="..\LibAtem\LibAtem\Commands\Audio\TalkbackMixerInputPropertiesSetCommand.cs">
-      <Link>Atem\LibAtem\Commands\Audio\TalkbackMixerInputPropertiesSetCommand.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Audio\AudioMixerInputGetV8Command.cs">
       <Link>Atem\LibAtem\Commands\Audio\AudioMixerInputGetV8Command.cs</Link>
@@ -1382,6 +1522,9 @@
     <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFillSourceSetCommand.cs">
       <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFillSourceSetCommand.cs</Link>
     </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyKeyframeStoreCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyKeyframeStoreCommand.cs</Link>
+    </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaResetCommand.cs">
       <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyAdvancedChromaResetCommand.cs</Link>
     </Compile>
@@ -1402,6 +1545,9 @@
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyTypeSetCommand.cs">
       <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyTypeSetCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyRunSetCommand.cs">
+      <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyRunSetCommand.cs</Link>
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyKeyframeSetCommand.cs">
       <Link>Atem\LibAtem\Commands\MixEffects\Key\MixEffectKeyFlyKeyframeSetCommand.cs</Link>
@@ -1504,6 +1650,9 @@
     </Compile>
     <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolClearAudioCommand.cs">
       <Link>Atem\LibAtem\Commands\Media\MediaPoolClearAudioCommand.cs</Link>
+    </Compile>
+    <Compile Include="..\LibAtem\LibAtem\Commands\Media\MediaPoolClearAllCommand.cs">
+      <Link>Atem\LibAtem\Commands\Media\MediaPoolClearAllCommand.cs</Link>
     </Compile>
   </ItemGroup>
 </Project>
