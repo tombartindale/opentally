@@ -13,7 +13,7 @@ Some specifics:
 
 ## Quickstart
 
-1. Download the bridge from [https://github.com/tombartindale/opentally/releases/latest](GitHub). The download includes both Windows and Mac applications.
+1. Download the bridge from [https://github.com/tombartindale/opentally/releases/latest](GitHub) for your platform.
 
 2. Unzip, and use one of the shortcuts to start the bridge.
 
