@@ -9,6 +9,10 @@ exports.files = {
   stylesheets: { joinTo: "app.css" },
 };
 
+exports.paths = {
+  public: "../docs",
+};
+
 exports.npm = {
   styles: { highlightjs: ["styles/default.css"] },
 };

@@ -8,7 +8,7 @@ $fa-font-path: "./fonts";
 $primary: #344c93;
 $body-font-size: 1.4em;
 $family-sans-serif: "Rajdhani", sans-serif;
-$title-family: "Megrim", cursive;
+$title-family: "Abel", sans-serif;
 @import "../node_modules/bulma/bulma.sass";
 
 .tally {
@@ -49,13 +49,28 @@ $title-family: "Megrim", cursive;
   }
 }
 
+@keyframes flash {
+  0% {
+    background-color: rgba(red, 0.4);
+  }
+  50% {
+    background-color: red;
+  }
+  100% {
+    background-color: rgba(red, 0.4);
+  }
+}
+
 .onair {
-  background: red;
+  animation: flash 1s infinite;
+  background: rgb(210, 73, 98);
   text-shadow: 0 0 3px black;
   color: white;
   border: 8px black solid;
   border-radius: 5px;
   padding: 8px;
+  padding-right: 12px;
+  padding-left: 12px;
   box-shadow: 0 0 10px #00000055 inset;
 }
 
