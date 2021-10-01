@@ -1,0 +1,316 @@
+section.hero.is-fullheight.is-default.is-bold
+  .hero-body
+    .container
+      
+      h1.title.is-1.has-text-primary Open #[.tally Tally]
+      h2.subtitle.is-3 An open source tally light system for flexibly operating physical or virtual camera sources.
+
+      .content
+
+        h2 What it Does
+        //- p In a broadcast environment its important to know who is currently 'live'.
+        p In a world where your live broadcast is now run from a Zoom meeting or your local coffee shop and your guests are across the world, we need a flexible tally light system that responds to changing scenarios.
+
+        
+        .image
+          img(src="/images/diag.jpg")
+
+        p Some specifics:
+            ul
+                li OBS (software) or Black Magic ATEM mixers can be used as the tally source.
+                li Any combination of web or hardware tally lights can be used simultaneously.
+                li Web tally can be used from a remote location (e.g. at the remote end of a zoom call used in OBS)
+
+      nav.bd-docs-pagination.bd-pagination-links
+        a.button.bd-fat-button.is-primary.is-light.bd-pagination-next(href='#getstarted')
+          span
+            em 
+            strong Quickstart
+          i →
+        a.button.bd-fat-button.is-light.bd-pagination-prev(href='https://bulma.io/documentation/elements/box/')
+          span
+            em Contribute at
+            strong GitHub
+          .icon.is-medium
+            .fab.fa-github
+
+.hero.is-fullheight
+  section.hero.is-primary
+    a(name="getstarted")
+    .hero-body
+      .container
+        .title.has-text-centered Quickstart
+
+  section.hero-body.py-6
+    .container
+      .content
+
+        .is-size-3 To get started with OpenTally, an instance of the Bridge application needs to be running on the same network as the  
+          strong production source. 
+          span This could be on the same computer (when using OBS), or on the same WifFi/Ethernet (when using ATEM Switcher).
+
+        h2 Install the Bridge
+        .columns.is-vcentered
+          .column.is-6
+            p Download the bridge for your platform.
+          .column.is-6
+            a.button.is-medium(href="https://github.com/tombartindale/opentally/releases/latest")
+              .icon.is-medium
+                .fa.fa-download
+              span Download from GitHub
+        hr
+        .columns.is-vcentered
+          .column.is-6
+            p Unzip, and use one of the shortcuts to start the bridge.
+          .column.is-6
+            img.image(src='images/files.png')
+
+        hr
+
+        p One instance of the bridge needs to run on a device on the same network as the tally source.
+
+        .message
+          .message-body By default, Bridge runs in #[span.tag.is-light online] mode. This keeps your current tally state up-to-date with an internet database (Google Firebase) allowing remote connection of tally lights. A browser will open asking you to authenticate using a Google login. This is just so that your bridge can be consistently identified with the Web client, and that only your bridge can adjust tally information for your production. If you are only using tally lights within the same venue, you can use the #[span.tag.is-light --offline] switch to disable this feature.
+
+        h2 Options
+
+        p You can customise Open Tally by starting it in a terminal with a variety of options:
+
+        code $ OpenTallyBridgeCore [SOURCE]
+
+        table.table.is-narrow
+            tr
+                td.has-text-weight-bold -o, --offline
+                td Only connect offline (without firebase) 
+            tr
+                td.has-text-weight-bold -c, --password
+                td Password for client connections (not implemented yet)
+
+        code $ OpenTallyBridgeCore atem
+
+        table.table.is-narrow
+            tr
+                td.has-text-weight-bold --help
+                td Display the following information
+            tr
+                td.has-text-weight-bold --name
+                td Name to identify your device
+
+
+
+        code $ OpenTallyBridgeCore obs
+
+        table.table.is-narrow
+            tr
+              td(colspan="2").has-text-danger To use OBS, you need to install the #[a(href="https://obsproject.com/forum/resources/obs-websocket-remote-control-obs-studio-from-websockets.466/") OBS Websocket Plugin].
+            tr
+                td.has-text-weight-bold -p, --obspassword
+                td Password for local OBS
+            tr
+                td.has-text-weight-bold -h, --host
+                td Host for local OBS
+            tr
+                td.has-text-weight-bold -t, --port
+                td Port for local OBS
+
+        //- .message
+        //-     .message-body To use OBS, you need to install the #[a(href="https://obsproject.com/forum/resources/obs-websocket-remote-control-obs-studio-from-websockets.466/") OBS Websocket Plugin] for OpenTally to work.
+
+        .is-size-3 Once you have setup the Bridge, you can select which tally lights to use.
+
+  .hero-footer
+    .hero-body
+      .container
+        nav.bd-docs-pagination.bd-pagination-links
+          a.button.bd-fat-button.is-primary.is-light.bd-pagination-prev(href='#top')
+            i ←
+            span
+              //- em OpenTally
+              strong OpenTally
+          a.button.bd-fat-button.is-primary.is-light.bd-pagination-next(href='#tallylights')
+            span
+              //- em Options
+              strong Tally Lights
+            i →
+
+.hero.is-fullheight
+  section.hero.is-primary
+    a(name="tallylights")
+    .hero-body
+      .container
+        .title Tally Lights
+
+  section.hero-body
+    .container
+      .content
+        .is-size-3 There are two options to use as a tally light, and they can be used in any combination for any source.
+
+        .is-size-3 Any combination of these lights can be used together in the same production configuration.
+
+        h2 Web
+
+        //- a.button.is-large(href="https://obstally.web.app") Open Tally
+
+        .columns.is-vcentered
+          .column.is-6
+            p Visit #[a(href="https://obstally.web.app") https://obstally.web.app] from any device to access the web tally.
+            p The web client works from any browser. Once you have the bridge running, your Tally source will appear in the list of available productions in the client. Just select a tally source (or the Program Out).
+
+            p The screen will:
+            ul
+                li Turn solid red when the source is selected and streaming or recording in occurring.
+                li Flash red when the source is selected but no streaming or recording is occurring.
+
+            .message
+              .message-body URLs are persistent, so you can bookmark the link for a specific production and/or tally source on your device.
+          .column.is-6
+            #wrapper
+              .phoneb.view_2
+                img(src='images/web1.png')
+            //- #wrapper
+            //-   .phone.view_2
+            //-     iframe(src='https://obstally.web.app')
+
+        
+
+        h2 Physical
+
+        .columns.is-vcentered
+          .column.is-6
+            p Currently, Physical tallys can only be triggered on the local network and by numerical sources (e.g. 1), not named sources (i.e. from OBS). They are primarily designed to be used with a physical camera setup.
+            p Once connected to the same WiFi network as the bridge, each device will:
+            ul
+                li Turn solid red when the source is selected and streaming or recording in occurring.
+                li Flash red when the source is selected but no streaming or recording is occurring.
+          .column.is-6
+            img(src="images/flash1.gif")
+
+  .hero-footer.p-6
+    .hero-body
+      .container
+        nav.bd-docs-pagination.bd-pagination-links
+          a.button.bd-fat-button.is-primary.is-light.bd-pagination-prev(href='#getstarted')
+            i ←
+            span
+              //- em GetStarted
+              strong Quickstart
+          a.button.bd-fat-button.is-primary.is-light.bd-pagination-next(href='#building')
+            span
+              //- em Building
+              strong Physical Tally
+            i →
+
+.hero.is-fullheight
+  section.hero.is-primary
+    a(name="building")
+    .hero-body
+        .container
+            .title Building a Physical Tally
+
+  section.hero-body
+    .container
+      .content
+
+        .is-size-3 Building physical tally boxes is really simple, but you will need a small amount of experience soldering and using basic coding tools.
+
+        h2 Gather Parts
+
+        p For each physical tally light, you will need:
+        ul
+          li 1 x #[a(href="https://store.particle.io/collections/gen-2/products/photon") Particle Photon WiFi Board]
+          li 1 x Neopixel/WS2812B LED
+          li 1 x Translucent kit box or other enclosure
+          li #[a(href="https://github.com/tombartindale/opentally/raw/master/tally-physical/build/firmware.bin") Latest Firmware File]
+
+        h2 Build Instructions
+
+        .columns.is-vcentered
+          .column
+            p Solder the Photon and LED together in the following way:
+          .column.is-3
+            img.image(src='images/circuit_bb.png')
+          .column.is-3
+            img.image.rounded(src='images/solder1.jpg')
+                
+        
+        //- .columns.is-vcentered
+        //-   .column
+        //-     p Solder the Photon and LED together in the following way:
+        //-   .column
+        //-     img.image(src='images/circuit_bb.png')
+        
+        hr
+
+        .columns.is-vcentered
+          .column
+            p Use the Particle mobile app to register the Photon with your Particle account
+          .column.is-4
+             #wrapper
+              .phone.view_2
+                img(src='images/onboard1.png')
+
+        hr
+
+        .columns.is-vcentered
+          .column
+            p Install Particle Workbench.
+          .column.is-6
+            a.button.is-medium(href="https://www.particle.io/workbench/")
+              .icon.is-medium
+                .fa.fa-download
+              span Install Particle Workbench
+          
+
+        hr
+
+        .columns.is-vcentered
+          .column
+            span In Particle workbench, press #[.has-text-primary.is-inline CMD+Shift P] and select #[.has-text-primary.is-inline Launch CLI]
+          .column.is-6
+            img.image(src='images/launchcli.png')
+        
+        hr
+
+        .columns.is-vcentered
+          .column
+            p Connect the Photon via USB and deploy firmware.
+            
+          .column.is-6
+            p In Terminal run #[code $ particle flash --usb firmware.bin]
+
+
+        h2 Configuring Devices
+
+        .columns.is-vcentered
+          .column
+            p Use the Particle mobile app on #[a(href="https://play.google.com/store/apps/details?id=io.particle.android.app") Android] or #[a(href="https://apps.apple.com/us/app/particle-iot/id991459054") iOS] to join the Photon to the same WiFi network that your bridge is running on:
+          .column.is-4
+            #wrapper
+              .phone.view_2
+                img(src='images/onboard1.png')
+
+        hr
+        .columns.is-vcentered
+          .column
+            p For each device, follow the instructions in the Particle app to activate your Particle for pairing.
+          .column.is-4
+            #wrapper
+              .phone.view_2
+                img(src='images/onboard2.png')
+        //- .columns.is-vcentered
+        //-   .column 
+        //-     p The app will 
+        //-   .column.is-4
+        //-     #wrapper
+        //-       .phone.view_2
+        //-         img(src='images/onboard3.png')
+        hr
+        .columns.is-vcentered
+          .column
+            p Once paired, use the Particle App to set the Tally channel that the device should respond to.
+
+            p Call the #[strong SetTallySource] function and set it to a tally channel.
+          .column.is-4
+            #wrapper
+              .phone.view_2
+                img(src='images/settally.png')

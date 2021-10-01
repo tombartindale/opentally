@@ -1,0 +1,83 @@
+
+/*Basic Phone styling*/
+#wrapper {
+  perspective: 1000px;
+}
+
+.phone {
+  border: 40px solid #ddd;
+  border-width: 55px 7px;
+  border-radius: 40px;
+  margin: 50px auto;
+  overflow: hidden;
+  transition: all 0.5s ease;
+
+  width:300px;
+  height:650px;
+}
+
+.phoneb {
+  border: 40px solid #ddd;
+  border-width:  7px 55px;
+  border-radius: 40px;
+  margin: 50px auto;
+  overflow: hidden;
+  transition: all 0.5s ease;
+
+  width:650px;
+  height:300px;
+}
+
+.phoneb img {
+  width:100%;
+  height:100%;
+}
+
+.phone iframe {
+  border: 0;
+  width: 100%;
+  height: 100%;
+}
+/*Different Perspectives*/
+
+.phone.view_1 {
+  transform: rotateX(50deg) rotateY(0deg) rotateZ(-50deg);
+  box-shadow: -3px 3px 0 #BBB, -6px 6px 0 #BBB, -9px 9px 0 #BBB, -12px 12px 0 #BBB, -14px 10px 20px #666;
+}
+
+.phone.view_2,.phoneb.view_2 {
+  transform: rotateX(0deg) rotateY(-30deg) rotateZ(0deg);
+  box-shadow: 5px 1px 0 #BBB, 9px 2px 0 #BBB, 12px 3px 0 #BBB, 15px 4px 0 #BBB, 0 7px 20px #999;
+}
+
+.phoneb.view_2b {
+  transform: rotateX(0deg) rotateY(-30deg) rotateZ(90deg);
+  box-shadow: 5px 1px 0 red, 9px 2px 0 red, 12px 3px 0 red, 15px 4px 0 red, 0 7px 20px #999;
+}
+
+.phone.view_3 {
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+  box-shadow: 0px 3px 0 #BBB, 0px 4px 0 #BBB, 0px 5px 0 #BBB, 0px 7px 0 #BBB, 0px 10px 20px #666;
+}
+/*Controls*/
+
+
+
+
+@media (max-width:900px) {
+  #wrapper {
+    transform: scale(0.8, 0.8);
+  }
+}
+
+@media (max-width:700px) {
+  #wrapper {
+    transform: scale(0.6, 0.6);
+  }
+}
+
+@media (max-width:500px) {
+  #wrapper {
+    transform: scale(0.4, 0.4);
+  }
+}

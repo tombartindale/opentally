@@ -1,0 +1,28 @@
+{
+  "name": "brunch-app",
+  "description": "Brunch.io application",
+  "private": true,
+  "author": "Brunch",
+  "version": "0.0.1",
+  "repository": "",
+  "scripts": {
+    "start": "brunch watch --server",
+    "build": "brunch build --production"
+  },
+  "dependencies": {
+    "highlightjs": "9.16.2"
+  },
+  "devDependencies": {
+    "auto-reload-brunch": "^2",
+    "babel-brunch": "~6.0",
+    "babel-preset-latest": "^6",
+    "brunch": "^2",
+    "bulma": "0.9.1",
+    "clean-css-brunch": "^2",
+    "pugjs-brunch": "^2.11.3",
+    "uglify-js-brunch": "^2",
+    "sass-brunch": "3.0.0",
+    "@fortawesome/fontawesome-free": "5.15.4",
+    "copycat-brunch": "1.1.1"
+  }
+}

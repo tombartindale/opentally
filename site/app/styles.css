@@ -1,0 +1,59 @@
+/* .brunch {
+  font-family: -apple-system, Sans-Serif;
+  text-align: center;
+  font-size: 24pt;
+  color: #3f894a;
+} */
+
+/* @import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;600&family=Megrim&display=swap"); */
+
+.bd-pagination-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.bd-docs-pagination .button span {
+  line-height: 1.25;
+  text-align: left;
+}
+
+.bd-docs-pagination .button em {
+  display: block;
+  font-size: 0.75em;
+  font-style: normal;
+  font-weight: 400;
+  opacity: 0.5;
+  text-transform: capitalize;
+}
+
+.bd-docs-pagination .button span {
+  line-height: 1.25;
+  text-align: left;
+}
+
+.bd-docs-pagination .bd-pagination-next span {
+  margin-right: 1em;
+}
+
+.bd-docs-pagination .button span {
+  line-height: 1.25;
+  text-align: left;
+}
+
+.bd-fat-button {
+  font-size: 1.25em;
+  font-weight: 600;
+  height: auto;
+  padding: 0.75em 1.25em;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
