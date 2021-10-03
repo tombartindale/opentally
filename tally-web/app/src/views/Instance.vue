@@ -1,8 +1,9 @@
 <template lang="pug">
-Page
+Page(:title="instance.Name")
   v-ons-list
+    v-ons-list-item(modifier="chevron", tappable, @click="goTo('po')") Program Out
     v-ons-list-item(
-      v-for="(item, index) of sources",
+      v-for="(item, index) of instance.Sources",
       :key="item",
       modifier="chevron",
       tappable,
@@ -18,13 +19,14 @@ export default {
   name: "Instance",
   data() {
     return {
-      sources: {},
+      // sources: {},
+      instance: {},
     };
   },
   created() {
     this.$rtdbBind(
-      "sources",
-      db.ref("instances").child(this.$route.params.id).child("Sources")
+      "instance",
+      db.ref("instances").child(this.$route.params.id)
     );
   },
   methods: {

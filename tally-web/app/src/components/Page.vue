@@ -2,7 +2,12 @@
 v-ons-page
   v-ons-toolbar
     v-ons-back-button Back
-    .center {{ $route.name }}
+    img(
+      src="favicon.png",
+      style="height: 32px; margin-top: 6px; margin-left: 6px",
+      v-if="$route.path == '/'"
+    )
+    .center {{ title || $route.name }}
     .right
       slot(name="settings")
   slot
@@ -12,5 +17,6 @@ v-ons-page
 export default {
   name: "Page",
   components: {},
+  props: ["title"],
 };
 </script>
