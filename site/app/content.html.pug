@@ -21,7 +21,7 @@ section.hero.is-fullheight.is-default.is-bold
                 li Any combination of web or hardware tally lights can be used simultaneously.
                 li Web tally can be used from a remote location (e.g. at the remote end of a Zoom call connected to an ATEM switcher)
 
-      nav.bd-docs-pagination.bd-pagination-links
+      nav.bd-docs-pagination.bd-pagination-links.columns
         a.button.bd-fat-button.is-primary.is-light.bd-pagination-next(href='#getstarted')
           span
             em 
@@ -163,20 +163,17 @@ section.hero.is-fullheight.is-default.is-bold
 
             .message
               .message-body URLs are persistent, so you can bookmark the link for a specific production and/or tally source on your device.
-          .column.is-6
+          .column.is-4
             #wrapper
-              .phoneb.view_2
-                img(src='images/web1.png')
-            //- #wrapper
-            //-   .phone.view_2
-            //-     iframe(src='https://obstally.web.app')
+              .phone.view_2
+                img(src='images/output.png')
 
         
 
         h2 Physical
 
         .columns.is-vcentered
-          .column.is-6
+          .column
             p Currently, Physical tallys can only be triggered on the local network and by numerical sources (e.g. 1), not named sources (i.e. from OBS). They are primarily designed to be used with a physical camera setup.
             p Once connected to the same WiFi network as the bridge, each device will:
             ul
