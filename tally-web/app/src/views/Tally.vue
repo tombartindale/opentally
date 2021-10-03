@@ -1,12 +1,15 @@
 <template lang="pug">
 Page(:title="sourceName")
   template(v-slot:settings)
-    v-ons-icon(
-      icon="md-link",
-      size="36px",
-      :style="{ color: instance.Online ? 'green' : 'silver' }"
-    )
-  .indicator(:class="{ recording: isRecording, preview: isPreview }")
+    .right
+      v-ons-icon(
+        icon="md-link",
+        size="36px",
+        :style="{ color: instance.Online ? 'green' : 'silver' }",
+        style="margin-right: 8px"
+      )
+  .indicator.onair(:class="{ recording: isRecording, preview: isPreview }")
+    div {{ sourceName }}
   .label-parent
     .label {{ sourceName }}
 </template>
@@ -47,7 +50,10 @@ export default {
         (this.instance.Recording || this.instance.Streaming)
       )
         return true;
-      else if (this.instance.PreviewTally.includes(this.sourceName))
+      else if (
+        this.instance.PreviewTally &&
+        this.instance.PreviewTally.includes(this.sourceName)
+      )
         return true;
       else return false;
     },
@@ -75,7 +81,7 @@ export default {
 
 @keyframes flash {
   50% {
-    outline-color: white;
+    background-color: darkred;
   }
 }
 
@@ -102,8 +108,31 @@ export default {
   width: 100%;
   background: #333;
   outline-style: solid;
-  outline-width: 2vh;
-  outline-offset: -2vh;
-  outline-color: transparent;
+
+  /* outline-width: 2vh; */
+  /* outline-offset: -2vh; */
+  /* outline-color: black; */
+}
+
+.onair {
+  animation: flash 1s infinite;
+  background: rgb(210, 73, 98);
+  text-shadow: 0 0 5px black;
+  color: white;
+  /* outline: 2vh black solid; */
+  /* padding: 8px; */
+  /* padding-right: 12px; */
+  /* padding-left: 12px; */
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: solid black 2vh;
+  box-shadow: 0 0 10px #00000055 inset;
+  text-align: center;
+  font-size: 10vh;
+}
+
+.onair div {
+  padding-top: 60%;
 }
 </style>

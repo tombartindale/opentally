@@ -1,5 +1,5 @@
 <template lang="pug">
-Page(:title="instance.Name")
+Page(:title="instName")
   v-ons-list
     v-ons-list-item(modifier="chevron", tappable, @click="goTo('po')") Program Out
     v-ons-list-item(
@@ -22,6 +22,12 @@ export default {
       // sources: {},
       instance: {},
     };
+  },
+  computed: {
+    instName() {
+      if (!this.instance.Name) return "Loading...";
+      return this.instance.Name.split(" ")[1];
+    },
   },
   created() {
     this.$rtdbBind(
